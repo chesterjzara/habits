@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head.ejs %>
+    <title>Document</title>
+</head>
+<body>
+    <% include ../partials/nav.ejs %>
+
+    <form action="/habits" method="POST" class="d-flex flex-row flex-wrap justify-content-center">
+        <fieldset class="border w-50 p-5 d-flex flex-column">
+            <legend>New Habit/Task</legend>
+            <label>
+                Name
+                <input type="text" name="name" placeholder="Habit/Task Name" class="w-100">
+            </label>
+            <label>
+                Description <br>
+                <textarea name="description" placeholder="Enter a short description of the task" class="w-100"></textarea>
+            </label>
+            <label>
+                Category/Tag
+                <input type="text" name="tag" placeholder="Eg: Health, Fitness, Learning, Social, etc" class="w-100">
+            </label>
+        </fieldset>
+        <br>
+        <input type="submit" value="Create Product" class="w-25 text-center p-3 m-5">
+    </form>
+</body>
+</html>

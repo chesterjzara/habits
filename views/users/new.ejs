@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head.ejs %>
+    <title>Habit Tracking | New User</title>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    <h1>Create User</h1>
+    <form action="/users" method="POST">
+        <input type="text" name="username" placeholder="username" />
+        <input type="password" name="password" />
+        <input type="submit" value="Create User" />
+    </form>
+
+    <!-- Unable to create user -->
+    <% if(messages) { %>
+        <h1> <%= messages %></h1>
+    <% } %>
+
+</body>
+
+</html>

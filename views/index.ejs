@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./partials/head.ejs %>
+    <title>Habit Tracking | Home</title>
+</head>
+<body>
+    
+    <% include ./partials/nav.ejs %>
+
+    <nav>
+        <a href="/">
+            <h1>Chop Wood, Carry Water</h1>
+        </a>
+        <ul>
+        <% if(currentUser) { %>
+            <li>
+                <a href="#">Dashboard</a>
+            </li>
+            <li>
+                <a href="#">Habit Tracking</a>
+            </li>
+            <li>
+                <form action="/sessions?_method=DELETE" method="POST">
+                    <input type="submit" value="Logout"/>
+                </form>
+            </li>
+    
+        <% } else { %>
+            <li>
+                <a href="/sessions/new">Log In</a>
+            </li>
+            <li>
+                <a href="/users/new">Register</a>
+            </li>
+            
+    
+        <% } %> 
+        </ul>
+    </nav>
+
+    <button class="test-button">Testing</button>
+
+
+    <% if(currentUser) { %>
+        <h2>Login checked!</h2>
+
+    <% } else { %>
+        <a href="/sessions/new">Log In</a>
+        <a href="/users/new">Register</a>
+
+    <% } %> 
+
+    <!-- <a href="/auth/login">Login Screen</a> -->
+
+    
+
+
+</body>
+</html>
