@@ -12,6 +12,7 @@ router.get('/new', (req,res) => {
     })
 });
 
+//Show User
 router.get('/:id', (req,res) => {
     res.render('users/show.ejs', {
         currentUser: req.session.currentUser

@@ -3,6 +3,9 @@
 const express = require('express');
 const app = express();
 
+//Moment.js
+const moment = require('moment');
+app.locals.moment = moment;
 
 // Port and Database Config
 const PORT = process.env.PORT || 3000;
@@ -137,6 +140,9 @@ app.get('/seeding/user', (req, res) => {
                 console.log(addedHabits[i]);
                 console.log(foundUser);
                 foundUser.habit_list.push(addedHabits[i])
+                if(foundUser.tag_list.indexOf(addedHabits[i].tag) === -1){
+                    foundUser.tag_list.push(addedHabits[i].tag)
+                }
             }
             foundUser.save( (err,savedUser)=> {
                 res.send(savedUser);
@@ -145,6 +151,9 @@ app.get('/seeding/user', (req, res) => {
     })
 })
 
+app.get('/currentUser', (req,res)=> {
+    res.send(req.session);
+})
 
 //Testing DB Setup:
 
