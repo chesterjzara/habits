@@ -11,6 +11,16 @@
     <!-- Header - NOTE this is passing id to browser JS, DO NOT REMOVE-->
     <h1 habit-id="<%= habit._id %>" id="habit-title"><%= habit.name %></h1>
 
+    <div class="container">
+        <div >
+            <a class="btn btn-primary" href="/habits/<%= habit._id %>/edit">Edit</a>
+        </div>
+        <form action="/habits/<%= habit._id %>?_method=DELETE" method="POST">
+            <input class="btn btn-danger" type="submit" value="DELETE">
+        </form>
+    </div>
+
+
     <div class="container text-center">
         <h2> <span class="calendar-month">Month</span> <span class="calendar-year">Year</span></h2>
     </div>

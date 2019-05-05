@@ -93,17 +93,76 @@ router.get('/:id' ,(req,res) => {
 router.delete('/:id', (req, res) => {
     let habitId = req.params.id
     Habit.findByIdAndRemove(habitId, (err, removedHabit) => {
+        let tagToRemove = removedHabit.tag;
         User.findOne({'habit_list._id' : habitId }, (err, foundUser)=> {
             foundUser.habit_list.id(habitId).remove();
+            
+
+            checkTagsList(foundUser, tagToRemove);
+            // let checkRemoveTag = foundUser.habit_list.every( (hab) => {
+            //     console.log(hab);
+            //     return !(hab.tag === (tagToRemove))
+            // });
+            // console.log(tagToRemove);
+            // console.log('Should remove tag: '+checkRemoveTag);
+            // if(checkRemoveTag) {
+            //     let removeIndex = foundUser.tag_list.indexOf(tagToRemove);
+            //     foundUser.tag_list.splice(removeIndex, 1)
+            // }
+
             foundUser.save( (err, data) => {
-                redirect('/habits/index');
+                res.redirect('/habits/index');
             });
         });
     });
 });
 
 //Edit 
+router.get('/:id/edit', (req, res) => {
+    let habitId = req.params.id;
+
+    Habit.findById( habitId, (err, foundHabit) => {
+         User.findOne( {'_id': foundHabit.userRef}, (err, foundUser) => {
+            res.render('habits/edit.ejs', {
+                habit: foundHabit,
+                currentUser: req.session.currentUser,
+                user: foundUser 
+            })
+         })
+    })
+})
 //Update
+router.put('/:id', (req,res) => {
+    let habitId = req.params.id;
+
+    Habit.findById(habitId, (err, foundHabit) =>{
+        let oldTag = foundHabit.tag
+        
+        Habit.findByIdAndUpdate( habitId, req.body, {new: true}, (err, updatedHabit) => {
+            User.findOne( {'_id': updatedHabit.userRef}, (err, foundUser) => {
+                            
+                //Remove old habit and re-add new habit
+                foundUser.habit_list.id(habitId).remove();
+                foundUser.habit_list.push(updatedHabit);
+
+                //Check if tag changed - update User.tag_list for removal of old/addition of new
+                if(oldTag !== updatedHabit.tag) {
+                    checkTagsList(foundUser, oldTag);
+                    
+                    if(foundUser.tag_list.indexOf(updatedHabit.tag) === -1){
+                        foundUser.tag_list.push(updatedHabit.tag)
+                    }
+                }
+
+                foundUser.save((err, data) => {
+                    res.redirect(`/habits/${habitId}`);
+                });
+            });
+        });
+    });
+}),
+
+
 
 ///////////////////////////////////////////////
 //      Updating Date Array (check/uncheck)
@@ -250,3 +309,16 @@ const sortDateData = (dateArr) => {
         return 0;
     })
 };
+
+const checkTagsList = (userObj, tagToRemove) => {
+    //Check through all tags to see if the remove tag remains
+    let checkRemoveTag = userObj.habit_list.every( (hab) => {
+        return !(hab.tag === (tagToRemove));
+    });
+    console.log(userObj);
+    //If there are no habits with the tag remaining, remove from the list
+    if(checkRemoveTag) {
+        let removeIndex = userObj.tag_list.indexOf(tagToRemove);
+        userObj.tag_list.splice(removeIndex, 1);
+    }
+}

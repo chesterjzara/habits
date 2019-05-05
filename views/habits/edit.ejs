@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head.ejs %>
+    <title>Habits | Edit Habit </title>
+</head>
+<body>
+    <% include ../partials/nav.ejs %>
+
+    <form action="/habits/<%= habit._id %>?_method=PUT" method="POST" class="d-flex flex-row flex-wrap justify-content-center">
+        <fieldset class="border w-50 p-5 d-flex flex-column">
+            <legend>Edit Habit/Task</legend>
+            <label>
+                Name
+                <input type="text" name="name" placeholder="Habit/Task Name" value="<%= habit.name %>" class="w-100">
+            </label>
+            <label>
+                Description <br>
+                <textarea name="description" placeholder="Enter a short description of the task" class="w-100"><%= habit.description %></textarea>
+            </label>
+            <label>
+                Category/Tag
+                <input type="text" name="tag" placeholder="Eg: Health, Fitness, Learning, Social, etc" value="<%= habit.tag %>" class="w-100">
+            </label>
+        </fieldset>
+        <br>
+        <input type="submit" value="Update Habit" class="w-25 text-center p-3 m-5">
+    </form>
+</body>
+</html>
