@@ -90,10 +90,17 @@ const testArr = [
     }
 ];
 
-let habitId = '5cccbdfc56b9dc2bde227637'
+// let habitId = '5cccbdfc56b9dc2bde227637'
 
-let origIndex = testArr.findIndex( (e) => {
-    return e._id === habitId
-})
+// let origIndex = testArr.findIndex( (e) => {
+//     return e._id === habitId
+// })
 
-console.log(origIndex);
+// console.log(origIndex);
+
+
+const moment = require('moment');
+
+console.log(moment().startOf('day').format());
+
+let dateObj = moment('04-05-1993');

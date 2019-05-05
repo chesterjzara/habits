@@ -12,6 +12,7 @@ const uncheckHabitDate = (event) => {
         "habitId": habitId
     }
 
+    console.log(rawDate);
     $.post(`/habits/uncheck/${habitId}`, sendObj, (data, status) => {
         console.log('data?',data);
         console.log(status);

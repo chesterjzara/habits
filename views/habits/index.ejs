@@ -36,7 +36,7 @@
                                     <% let pageDay = moment().startOf('day').subtract(j, 'days').format();
                                     let checked = false; %>
                                     <% for(let checkDates of habits[i].date_data) { 
-                                        if(moment(checkDates).isSame(pageDay)) { 
+                                        if(moment(checkDates).isSame(pageDay, 'day')) { 
                                             checked = true;
                                         }
                                     } %>   

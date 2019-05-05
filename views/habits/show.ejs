@@ -11,7 +11,28 @@
     <!-- Header - NOTE this is passing id to browser JS, DO NOT REMOVE-->
     <h1 habit-id="<%= habit._id %>" id="habit-title"><%= habit.name %></h1>
 
-    
+    <div class="container text-center">
+        <h2> <span class="calendar-month">Month</span> <span class="calendar-year">Year</span></h2>
+    </div>
+    <div class="container d-flex flex-row">
+        <div class="btn btn-info prev-month-btn">
+            Prev
+        </div>
+        <div class="container calendar-container text-align">
+            <div class="row calendar-days">
+                <div class="col">Sun</div>
+                <div class="col">Mon</div>
+                <div class="col">Tue</div>
+                <div class="col">Wed</div>
+                <div class="col">Thur</div>
+                <div class="col">Fri</div>
+                <div class="col">Sat</div>
+            </div>
+        </div>
+        <div class="btn btn-info next-month-btn">
+            Next
+        </div>
+    </div>
 
 </body>
 </html>

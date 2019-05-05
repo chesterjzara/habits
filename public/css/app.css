@@ -8,3 +8,7 @@ div {
 div[habit-checked="true"] {
     color: red;
 }
+
+.calendar-checked {
+    background-color: aqua;
+}

@@ -55,7 +55,7 @@ router.get('/index', (req, res) => {
             
             //Sort the 
             for(let habElement of foundUser.habit_list) {
-                console.log(habElement);
+                //console.log(habElement);
                 habElement.date_data.sort( (a,b) => {
                     if(moment(a).isBefore(b, 'day')) {return -1}
                     if(moment(a).isAfter(b, 'day')) {return 1}
@@ -110,17 +110,23 @@ router.delete('/:id', (req, res) => {
 ///////////////////////////////////////////////
 
 router.post('/uncheck/:id', (req, res) => {
-    let date = moment(req.body.date).toDate();
-    // let userId = req.session.currentUser._id;
-    // let removalId = req.params.id;
-    // console.log(date, userId, removalId);
+    console.log('Raw date:',req.body.date);
     
-    let habitId = req.params.id
 
+    //Addded start of here
+    let date = moment(req.body.date).startOf('day').toDate();
+    
+    console.log(date);
+
+    let habitId = req.params.id
+    console.log(date);
+    console.log(habitId);
 
     if(habitId){
         Habit.findById( habitId, (err, foundHabit) => {
             for(let i=0; i < foundHabit.date_data.length; i++) {
+                console.log(foundHabit.date_data[i]);
+                console.log('Test: ',moment(foundHabit.date_data[i]).isSame(date, 'day'));
                 if(moment(foundHabit.date_data[i]).isSame(date, 'day')){
                     foundHabit.date_data.splice(i,1);
                 }
