@@ -114,7 +114,7 @@ router.post('/uncheck/:id', (req, res) => {
     
 
     //Addded start of here
-    let date = moment(req.body.date).startOf('day').toDate();
+    let date = moment(req.body.date, 'MM-DD-YYYY').startOf('day').toDate();
     
     console.log(date);
 
@@ -160,7 +160,7 @@ router.post('/uncheck/:id', (req, res) => {
 })
 
 router.post('/check/:id', (req, res) => {
-    let date = moment(req.body.date).toDate()
+    let date = moment(req.body.date, 'MM-DD-YYYY').startOf('day').toDate();
     // let userId = req.session.currentUser._id
     let habitId = req.params.id;
 

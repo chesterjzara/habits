@@ -113,11 +113,15 @@ const calendarClick = (event) => {
         
     }
     else if ($date.hasClass('calendar-unchecked')) {
-        //// Do unchecking code here
-
-        //Eventually switch the class
-        $date.removeClass('calendar-unchecked').addClass('calendar-checked');
-    }
+        //// Do checking code here
+        $.post(`/habits/check/${habitId}`, sendObj, (data, status) => {
+            console.log('data?',data);
+            console.log(status);
+            
+            //Eventually switch the class
+            $date.removeClass('calendar-unchecked').addClass('calendar-checked');
+        });
+    }   
 
 
 }
