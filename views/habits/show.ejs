@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head.ejs %>
+    <script src="/js/habit-show.js" charset="utf-8"></script>
+    <title>Habit Tracking | Show Habit</title>
+</head>
+<body>
+    <% include ../partials/nav.ejs %>
+
+    <!-- Header - NOTE this is passing id to browser JS, DO NOT REMOVE-->
+    <h1 habit-id="<%= habit._id %>" id="habit-title"><%= habit.name %></h1>
+
+    
+
+</body>
+</html>

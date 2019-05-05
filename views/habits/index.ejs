@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <% include ../partials/head.ejs %>
+    <script src="/js/habit-index.js" charset="utf-8"></script>
     <title>Habit Tracking | Habits</title>
 </head>
 <body>
@@ -12,8 +13,9 @@
     
     <% for(let t = 0; t < tags.length; t++) { %>
         <div class="">
-            <div>
-                <h1><%= tags[t] %></h1>
+            <div class="row">
+                <h1 class="col"><%= tags[t] %></h1>
+                <a class="col" href="/habits/new?category=<%= tags[t] %>">New Habit</a>
             </div>
                 <div class="">
                     <div class="row">
@@ -28,7 +30,7 @@
                     <% for(let i = 0; i < habits.length; i++) { %>
                         <% if (habits[i].tag === tags[t]) { %>
                             <div class="row">
-                                <div class=col><%= habits[i].name %></div>
+                                <div class=col><a href="/habits/<%= habits[i]._id %>"><%= habits[i].name %></a></div>
                                 <div class="col">Show More</div>
                                 <% for(let j = 5; j >= 0; j--) { %>
                                     <% let pageDay = moment().startOf('day').subtract(j, 'days').format();

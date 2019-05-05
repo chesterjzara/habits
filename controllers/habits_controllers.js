@@ -5,10 +5,20 @@ const moment = require('moment');
 const User = require('../models/users.js');
 const Habit = require('../models/habits.js');
 
+module.exports = router;
+
+/////////////////////////////////////
+//          Rest/CRUD Routes
+/////////////////////////////////////
+
 // New habit page
 router.get('/new', (req,res)=> {
+    
+    console.log(req.query);
+
     res.render('habits/new.ejs', {
-        currentUser: req.session.currentUser
+        currentUser: req.session.currentUser,
+        category: req.query.category
     });
 });
 //Create new Habit
@@ -53,7 +63,6 @@ router.get('/index', (req, res) => {
                 })
             }
 
-            //res.send(foundUser.habit_list);
 
             //Send the current user 
             res.render('habits/index.ejs', {
@@ -68,6 +77,37 @@ router.get('/index', (req, res) => {
     }
     
 })
+
+//Show 
+router.get('/:id' ,(req,res) => {
+    let habitId = req.params.id;
+    Habit.findById( habitId, (err, foundHabit) => {
+        res.render('habits/show.ejs', {
+            currentUser: req.session.currentUser,
+            habit: foundHabit
+        });
+    })
+})
+
+//Destroy 
+router.delete('/:id', (req, res) => {
+    let habitId = req.params.id
+    Habit.findByIdAndRemove(habitId, (err, removedHabit) => {
+        User.findOne({'habit_list._id' : habitId }, (err, foundUser)=> {
+            foundUser.habit_list.id(habitId).remove();
+            foundUser.save( (err, data) => {
+                redirect('/habits/index');
+            });
+        });
+    });
+});
+
+//Edit 
+//Update
+
+///////////////////////////////////////////////
+//      Updating Date Array (check/uncheck)
+///////////////////////////////////////////////
 
 router.post('/uncheck/:id', (req, res) => {
     let date = moment(req.body.date).toDate();
@@ -169,8 +209,38 @@ router.get('/allData', (req,res) => {
     })
 })
 
-module.exports = router;
+////////////////////////////////////////////////
+///         Display a Month of Habit Data
+////////////////////////////////////////////////
+
+router.get('/month/:id', (req, res) => {
+    let habitId = req.params.id;
+    let displayMonth = req.query.month;
+
+    Habit.findById( habitId, (err, foundHabit) => {
+        let filteredDates = foundHabit.date_data.filter( (date) => {
+            if (parseInt(moment(date).month()) === parseInt(displayMonth)) {
+                return true 
+            }
+            else { return false }
+        });
+
+        sortDateData(filteredDates);
+
+        res.send(filteredDates)
+    });
+});
+
 
 ////////////////////////////
 ///     Help Methods
 ////////////////////////////
+
+const sortDateData = (dateArr) => {
+
+    dateArr.sort( (a,b) => {
+        if(moment(a).isBefore(b, 'day')) {return -1}
+        if(moment(a).isAfter(b, 'day')) {return 1}
+        return 0;
+    })
+};
