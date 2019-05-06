@@ -111,6 +111,7 @@ $( ()=> {
     loadAllDateElements();
 
     //$(`div[habit-checked='false'`).on('click', checkHabitDate)
-    $(`div[habit-checked='true'`).on('click', uncheckHabitDate)
+    //$(`div[habit-checked='true'`).on('click', uncheckHabitDate)
+    $('.inlinesparkline').sparkline(); 
 
 })

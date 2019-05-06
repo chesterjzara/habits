@@ -3,19 +3,23 @@
 <head>
     <% include ../partials/head.ejs %>
     <script src="/js/habit-index1.js" charset="utf-8"></script>
+    <script src="/js/sparkline.js" charset="utf-8"></script>
     <title>Habit Tracking | Habits</title>
 </head>
 <body>
     <% include ../partials/nav.ejs %>
 
+    <div class='container'>
     <h1>All Habits</h1>
 
     
     <% for(let t = 0; t < tags.length; t++) { %>
-        <div class="tag-habit-container">
-            <div class="row tag-title">
-                <h1 class="col"><%= tags[t] %></h1>
-                <a class="col" href="/habits/new?category=<%= tags[t] %>">New Habit</a>
+        <div class="tag-habit-container border-top border-bottom">
+            <div class="d-flex flex-row align-items-center tag-title ">
+                <h1 class=""><%= tags[t] %> </h1>
+                <a class="btn btn-success mx-4" href="/habits/new?category=<%= tags[t] %>">New Habit</a>
+                <canvas class="sparkline"></canvas>
+                
             </div>
                 <div class="habit-data-container">
                     <div class="row date-row">
@@ -43,5 +47,6 @@
                 </div>
         </div>
     <% } %>
+</div>
 </body>
 </html>

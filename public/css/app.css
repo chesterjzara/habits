@@ -12,3 +12,8 @@ div[habit-checked="true"] {
 .calendar-checked {
     background-color: aqua;
 }
+
+.sparkline {
+    height: 3em;
+}
+

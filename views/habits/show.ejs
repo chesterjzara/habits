@@ -1,23 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <% include ../partials/head.ejs %>
     <script src="/js/habit-show.js" charset="utf-8"></script>
     <title>Habit Tracking | Show Habit</title>
 </head>
+
 <body>
     <% include ../partials/nav.ejs %>
 
-    <!-- Header - NOTE this is passing id to browser JS, DO NOT REMOVE-->
-    <h1 habit-id="<%= habit._id %>" id="habit-title"><%= habit.name %></h1>
-
-    <div class="container">
-        <div >
-            <a class="btn btn-primary" href="/habits/<%= habit._id %>/edit">Edit</a>
+    <div class="container my-3">
+        <div class="row">
+            <!-- Header - NOTE this is passing id to browser JS, DO NOT REMOVE-->
+            <div class="leftPane col">
+                <h1 habit-id="<%= habit._id %>" id="habit-title"><%= habit.name %></h1>
+                <h3>Category: <%= habit.tag %></h2>
+                <div>
+                    <h3>Description:</h3>
+                    <p><%= habit.description %></p>
+                </div>
+                <div>
+                    <h3>Goal:</h3>
+                    <% if( habit.weekly_goal === 1) { %>
+                        <p><%= habit.weekly_goal %> time per week.</p>
+                    <% } else { %>
+                        <p><%= habit.weekly_goal %> times per week.</p>
+                    <% } %>
+                </div>
+                <h3>Weight: <%= habit.weight %> </h3>
+                <div>
+                    <h3>Options</h3>
+                    <div class="d-flex flex-row">
+                        <div class="m-2">
+                            <a class="btn btn-primary" href="/habits/<%= habit._id %>/edit">Edit</a>
+                        </div>
+                        <form class="m-2" action="/habits/<%= habit._id %>?_method=DELETE" method="POST">
+                            <input class="btn btn-danger" type="submit" value="DELETE">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="rightPane col">
+                <canvas id="showChart"></canvas>
+            </div>
         </div>
-        <form action="/habits/<%= habit._id %>?_method=DELETE" method="POST">
-            <input class="btn btn-danger" type="submit" value="DELETE">
-        </form>
+
     </div>
 
 
@@ -45,4 +73,5 @@
     </div>
 
 </body>
+
 </html>

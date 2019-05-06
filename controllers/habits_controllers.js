@@ -88,11 +88,19 @@ router.get('/index', (req, res) => {
 //Show 
 router.get('/:id' ,(req,res) => {
     let habitId = req.params.id;
+    let dataOnly = req.query.dataOnly
+
     Habit.findById( habitId, (err, foundHabit) => {
-        res.render('habits/show.ejs', {
-            currentUser: req.session.currentUser,
-            habit: foundHabit
-        });
+        
+        if(dataOnly) {
+            res.send(foundHabit);
+        }
+        else {
+            res.render('habits/show.ejs', {
+                currentUser: req.session.currentUser,
+                habit: foundHabit
+            });
+        }
     })
 })
 

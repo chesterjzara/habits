@@ -23,6 +23,26 @@
                 <input type="text" name="tag" placeholder="Eg: Health, Fitness, Learning, Social, etc" value="<%= category %>" class="w-100">
             </label>
         </fieldset>
+        <fieldset class="border w-50 p-5 d-flex flex-column">
+            <legend>Habit Values</legend>
+            <label>
+                Weekly Goal
+                <select class="w-100" name="weekly_goal">
+                    <option value="1">1 time per week</option>
+                    <option value="2">2 times per week</option>
+                    <option value="3">3 times per week</option>
+                    <option value="4">4 times per week</option>
+                    <option value="5">5 times per week</option>
+                    <option value="6">6 times per week</option>
+                    <option value="7">7 times per week</option>
+                </select>
+            </label>
+            <label>
+                Weight
+                <input class="w-100" type="number" name="weight" value="1">
+                <P>Use weighting to indicate certain habits are more important. This will contribute to your habit adherence scoring. Leave this at 1 if you aren't sure.</P>
+            </label>
+        </fieldset>
         <br>
         <input type="submit" value="Create Habit" class="w-25 text-center p-3 m-5">
     </form>

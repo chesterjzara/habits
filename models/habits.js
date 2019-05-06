@@ -9,7 +9,9 @@ const habitSchema = new mongoose.Schema({
     description: String,
     tag: String,
     notes: String,
-    date_data: [Date]
+    date_data: [Date],
+    weekly_goal: Number,
+    weight: Number
 });
 
 const Habit = mongoose.model('Habit', habitSchema);

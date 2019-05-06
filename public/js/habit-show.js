@@ -52,7 +52,7 @@ const generateCalendar = (month, year, data) => {
             let $newCol = $('<div>').addClass('calendar-dates col');
             //first row logic
             if(i === 0 && j < firstDayOfMonth) {
-                //Add blank spaces
+                //Add blank spaces - do nothing for now, maybe blank icon later?
                 
             } 
             //otherwise add cell with date unless 
@@ -153,6 +153,97 @@ const nextMonth = (event) => {
     loadCalendarData(currentMonth, currentYear)
 }
 
+const generateChart = (type) => {
+    let ctx = $('#showChart')
+    let habitId = $('#habit-title').attr('habit-id');
+
+    $.get(`/habits/${habitId}?dataOnly=true`, (habitData,status) =>{
+
+        console.log(habitData);
+        let labelData = getChartLabels(type);
+        let chartData = getChartData(type, habitData);
+
+        let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labelData,
+            datasets: [{
+                // label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: chartData
+                }]
+            },
+            // Configuration options go here
+            options: {
+                //hide legend
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: 0,
+                            max: 100,
+                            maxTicksLimit: 5
+                        }
+                    }]
+                }
+            }
+        });
+
+    } )
+
+    
+}
+
+const getChartLabels = (type) => {
+    let retArr = [];
+
+    if(type === '6month') {
+        for(let i=0; i < 6; i++) {
+            retArr.unshift(moment().subtract(i, 'month').format("MMM"));
+        }
+    }
+    return retArr;
+}
+
+const getChartData = (type, data) => {
+    let retArr = []
+    let goalFreqPerWeek = data.weekly_goal;
+
+    let expectedScoreMonths = [];
+    let realScoreMonths = [0 ,0, 0, 0, 0, 0];
+
+    console.log(data);
+
+    if(type === '6month') {
+        for(let i =0; i < 6; i++) {
+            let daysThisMonth = moment().subtract(i, 'month').daysInMonth()
+            expectedScoreMonths.unshift( daysThisMonth * (goalFreqPerWeek/7));
+        
+            for(let j=0; j < data.date_data.length; j++) {
+                console.log('Checking date:',data.date_data[j]);
+                if(moment(data.date_data[j]).isSame(moment().subtract(i, 'month'),'month')){
+                    console.log('Month matched');
+                    realScoreMonths[(realScoreMonths.length) - (i + 1)] += 1;
+                }
+            }
+            console.log(realScoreMonths);
+        }
+        
+        retArr = realScoreMonths.map( (element, index) => {
+            return ((element / expectedScoreMonths[index])*100).toFixed(2);
+        });
+
+               
+    }
+
+    console.log(expectedScoreMonths);
+    console.log(retArr);
+    return retArr
+}
 
 $( ()=> {
     //console.log('connected to show js file');
@@ -167,5 +258,7 @@ $( ()=> {
 
     $('.prev-month-btn').on('click', prevMonth)
     $('.next-month-btn').on('click', nextMonth)
+
+    generateChart('6month');
 
 })
