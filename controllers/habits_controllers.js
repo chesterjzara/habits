@@ -48,6 +48,8 @@ router.post('/', (req,res) => {
 //Habit Index Page - show all habits for current user
 router.get('/index', (req, res) => {
 
+    let dataOnly = req.query.dataOnly
+
     let currentUser = req.session.currentUser
     if(currentUser) {
         User.findById(currentUser, (err, foundUser) => {
@@ -63,13 +65,18 @@ router.get('/index', (req, res) => {
                 })
             }
 
-
-            //Send the current user 
-            res.render('habits/index1.ejs', {
-                currentUser : currentUser,
-                habits: foundUser.habit_list,
-                tags: foundUser.tag_list
-            })
+            if(dataOnly) {
+                res.send(foundUser.habit_list);
+            }
+            else {
+                //Send the current user 
+                res.render('habits/index1.ejs', {
+                    currentUser : currentUser,
+                    habits: foundUser.habit_list,
+                    tags: foundUser.tag_list
+                });
+            }
+            
         })
     } else {
         req.flash('info', 'Please log in first')
