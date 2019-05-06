@@ -33,20 +33,7 @@
                                 <div class=col><a href="/habits/<%= habits[i]._id %>"><%= habits[i].name %></a></div>
                                 <div class="col">Show More</div>
                                 <% for(let j = 5; j >= 0; j--) { %>
-                                    <% let pageDay = moment().startOf('day').subtract(j, 'days').format();
-                                    let checked = false; %>
-                                    <% for(let checkDates of habits[i].date_data) { 
-                                        if(moment(checkDates).isSame(pageDay, 'day')) { 
-                                            checked = true;
-                                        }
-                                    } %>   
-                                    
-                                    <div class="habit-checkbox col text-center" habit-date="<%= moment().startOf('day').subtract(j, 'days').format() %>" habit-id="<%= habits[i]._id %>" habit-checked=<% if(checked) { %> 
-                                            "true"  
-                                        <% } else { %>
-                                            "false"
-                                        <% } %>
-                                    > 
+                                    <div class="habit-checkbox col text-center" habit-id="<%= habits[i]._id %>">  
                                        O
                                     </div>
                                     

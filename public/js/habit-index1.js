@@ -104,6 +104,10 @@ const loadAllDateElements = () => {
 
 $( ()=> {
     
+    $(window).on('popstate', function() {
+        location.reload(true);
+    }); //via - https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
+
     loadAllDateElements();
 
     //$(`div[habit-checked='false'`).on('click', checkHabitDate)
