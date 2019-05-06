@@ -65,7 +65,7 @@ router.get('/index', (req, res) => {
 
 
             //Send the current user 
-            res.render('habits/index.ejs', {
+            res.render('habits/index1.ejs', {
                 currentUser : currentUser,
                 habits: foundUser.habit_list,
                 tags: foundUser.tag_list
