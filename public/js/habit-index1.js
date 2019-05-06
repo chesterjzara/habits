@@ -8,7 +8,7 @@ const uncheckHabitDate = (event) => {
     let rawDate = $(event.target).attr('habit-date');
     let habitId = $(event.target).attr('habit-id');
     let sendObj = {
-        "date": moment(rawDate).format('MM-DD-YYYY'),
+        "date": rawDate,
         "habitId": habitId
     }
 
@@ -33,7 +33,7 @@ const checkHabitDate = (event) => {
     let habitId = $(event.target).attr('habit-id');
     
     let sendObj = {
-        "date": moment(rawDate).format('MM-DD-YYYY'),
+        "date": rawDate,
         "habitId": habitId
     }
 
