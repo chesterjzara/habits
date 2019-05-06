@@ -96,7 +96,7 @@ const calendarClick = (event) => {
     let rawDate = $(event.target).attr('habit-date');
     let habitId = $('#habit-title').attr('habit-id');
     let sendObj = {
-        "date": moment(rawDate).format('MM-DD-YYYY'),
+        "date": rawDate,
         "habitId": habitId
     }
 
