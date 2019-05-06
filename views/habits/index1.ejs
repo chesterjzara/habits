@@ -31,14 +31,6 @@
                             <div class="row habit-data-row" id="<%= habits[i]._id %>">
                                 <div class="col"><a href="/habits/<%= habits[i]._id %>"><%= habits[i].name %></a></div>
                                 <% for(let j = 5; j >= 0; j--) { %>
-                                    <% let pageDay = moment().startOf('day').subtract(j, 'days').format();
-                                    let checked = false; %>
-                                    <% for(let checkDates of habits[i].date_data) { 
-                                        if(moment(checkDates).isSame(pageDay, 'day')) { 
-                                            checked = true;
-                                        }
-                                    } %>   
-                                    
                                     <div date-offset="<%= j %>" class="habit-check-field col text-center"  habit-id="<%= habits[i]._id %>"> 
                                        O
                                     </div>

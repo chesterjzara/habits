@@ -287,13 +287,19 @@ router.get('/allData', (req,res) => {
 ///         Display a Month of Habit Data
 ////////////////////////////////////////////////
 
+//Actually returns the requested month +/- 1
 router.get('/month/:id', (req, res) => {
     let habitId = req.params.id;
     let displayMonth = req.query.month;
+    console.log('Display month: '+ displayMonth);
 
     Habit.findById( habitId, (err, foundHabit) => {
         let filteredDates = foundHabit.date_data.filter( (date) => {
-            if (parseInt(moment(date).month()) === parseInt(displayMonth)) {
+            date = date.toISOString();
+            console.log('Date: ',date);
+            console.log('1-',parseInt(moment(date).month()));
+            console.log('2-',parseInt(displayMonth));
+            if ( Math.abs(parseInt(moment(date).month()) - parseInt(displayMonth)) < 2 ) {
                 return true 
             }
             else { return false }
