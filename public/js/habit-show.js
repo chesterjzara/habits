@@ -185,7 +185,7 @@ const generateChart = (type) => {
                         display: true,
                         ticks: {
                             beginAtZero: 0,
-                            max: 100,
+                            suggestedMax: 100,
                             maxTicksLimit: 5
                         }
                     }]
