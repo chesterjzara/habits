@@ -168,6 +168,9 @@ const generateChart = (type) => {
         let labelData = getChartLabels(type);
         let chartData = getChartData(type, habitData);
 
+        //Store page scroll location to re-adjust after chart updates (prevents scroll to top each time)
+        let pagePosition = $(document).scrollTop();
+
         let chart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -197,7 +200,7 @@ const generateChart = (type) => {
                 }
             }
         });
-
+        $(document).scrollTop(pagePosition);
     } )
 
     

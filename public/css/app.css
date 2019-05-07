@@ -5,8 +5,14 @@ div {
     /* border: 1px solid black; */
 }
 
-div[habit-checked="true"] {
-    color: red;
+div[habit-checked="true"]::before {
+    color: navy;
+    content: '\F14a'
+}
+
+div[habit-checked="false"]::before {
+    color: navy;
+    content: '\F096'
 }
 
 .calendar-checked {
@@ -30,3 +36,14 @@ div[habit-checked="true"] {
     
 } 
 /* info from https://fvsch.com/styling-buttons/ */
+
+/* Setting up icons for Checkmarks on Habit Index */
+@font-face {
+    font-family: "Icons";
+    src: url('../font/fontello.ttf')
+    /* empty box = F096 */
+    /* checked box = F14a */
+}
+.habit-check-field {
+    font-family: Icons;
+}

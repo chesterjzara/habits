@@ -92,9 +92,11 @@ const loadAllDateElements = () => {
                 $eachCheckField.attr('habit-date', pageDate);
                 
                 if(checked) {
+                    //$eachCheckField.html('&#xf14a')
                     $eachCheckField.on('click', uncheckHabitDate)
                 }
                 else {
+                    //$eachCheckField.html('&#xF096')
                     $eachCheckField.on('click', checkHabitDate)
                 }
 
