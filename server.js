@@ -39,6 +39,13 @@ db.on('disconnected', () => console.log('mongo disconnected'));
 //////////////////////////
 //      Middleware
 /////////////////////////
+//Serve Favicon Request
+let favicon = require('serve-favicon');
+// var path = require('path');
+// app.use('/favicon.ico', express.static('public/favicon.ico'));
+app.use(favicon('./public/favicon.ico'));
+
+
 //Static File access
 app.use(express.static('public'));  //eg: '/css/app.css'
 
