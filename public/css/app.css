@@ -1,5 +1,5 @@
 body {
-    background-color: antiquewhite;
+    background-color: whitesmoke;
 }
 div {
     /* border: 1px solid black; */
@@ -46,4 +46,40 @@ div[habit-checked="false"]::before {
 }
 .habit-check-field {
     font-family: Icons;
+}
+.index-back {
+    font-family: Icons;
+}
+
+
+/* Registration and Sign In Pages */
+.sign-in-up {
+    padding: 15px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+.sign-in-up-fields {
+    padding: 15px;
+}
+.sign-in-up-fields label {
+    margin-top: 10px;
+}
+.sign-in-up-fields input {
+    width: 100%
+}
+.signin-submit-container {
+    padding: 10px 20px 10px 20px;
+}
+.signin-submit-container > *{
+    margin-top: 10px
+}
+/* .new-user-session-submit {
+    margin: 25px auto; */
+    /* display: block;
+
+} */
+.signin-img-frame > img {
+    height: 20vh;
+    width: 100%;
+    object-fit: cover;
 }

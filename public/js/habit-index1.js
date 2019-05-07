@@ -165,7 +165,8 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
         datasets: [{
             // label: 'My First dataset',
             // backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(0, 0, 128)',
+            // fill: false,
             data: chartDataArr,
             lineTension: 0
             }]
@@ -178,10 +179,15 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
             legend: {
                 display: false
             },
+            layout: {
+                padding: {
+                  top: 5
+                }
+            },
             elements: {
                 line: {
                     borderColor: '#000000',
-                    borderWidth: 1
+                    borderWidth: 2
                 },
                 point: {
                   radius: 0
@@ -193,7 +199,12 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
             scales: {
                 yAxes: [
                     {
-                        display: false
+                        display: false,
+                        ticks: {
+                            padding: 30,
+                            min: -0.05,
+                            max: 1.05
+                        }
                     }
                 ],
                 xAxes: [

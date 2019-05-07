@@ -10,7 +10,7 @@
     <% include ../partials/nav.ejs %>
 
     <div class='container'>
-    <h1>All Habits</h1>
+    <h1 class="text-center">All Habits</h1>
 
     <div class="row date-row">
         <div class="col-0"> </div>
@@ -23,12 +23,12 @@
     <% for(let t = 0; t < tags.length; t++) { %>
         <div class="tag-habit-container  border-top border-bottom" id="<%= tags[t] %>">
             <div class="d-flex flex-row flex-wrap justify-content-between align-items-center tag-title" tag-name="<%= tags[t] %>">
-                <h2 class=""><%= tags[t] %> </h2>
+                <h2 class=""><%= tags[t] %> </h2>  
                 
                 <a class="btn btn-success mx-4" href="/habits/new?category=<%= tags[t] %>">New</a>
 
                 <canvas class="sparkline col-12" id="sparkChart<%=t%>" tag-name="<%= tags[t] %>" width="640px" height="50px"></canvas>
-                
+                                
             </div>
                 <div class="habit-data-container">
                     <!-- <div class="row date-row">

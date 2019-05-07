@@ -6,6 +6,9 @@
 </head>
 <body>
     <% include ../partials/nav.ejs %>
+    <a href="/habits/index">
+        <div class="container-fluid bg-info"> <h2 class='text-white'> <span class="index-back">&#xE800</span> Back to Dashboard</h2> </div>
+    </a>
 
     <form action="/habits/<%= habit._id %>?_method=PUT" method="POST" class="d-flex flex-row flex-wrap justify-content-center">
         <fieldset class="border w-50 p-5 d-flex flex-column">
