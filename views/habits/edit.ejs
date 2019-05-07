@@ -23,6 +23,25 @@
                 <input type="text" name="tag" placeholder="Eg: Health, Fitness, Learning, Social, etc" value="<%= habit.tag %>" class="w-100">
             </label>
         </fieldset>
+        <fieldset class="border w-50 p-5 d-flex flex-column">
+            <legend>Habit Values</legend>
+            <label>
+                Weekly Goal
+                <select class="w-100" name="weekly_goal">
+                    <% for(let i = 1; i < 8; i++) { %> 
+                        <option value="<%= i %>"
+                            <% if(habit.weekly_goal === i) { %> selected <% } %>
+                        >
+                            <%= i %> time(s) per week</option>
+                    <% } %>
+                </select>
+            </label>
+            <label>
+                Weight
+                <input class="w-100" type="number" name="weight" value="<%= habit.weight %>">
+                <P>Use weighting to indicate certain habits are more important. This will contribute to your habit adherence scoring. Leave this at 1 if you aren't sure.</P>
+            </label>
+        </fieldset>
         <br>
         <input type="submit" value="Update Habit" class="w-25 text-center p-3 m-5">
     </form>

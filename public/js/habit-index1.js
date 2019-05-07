@@ -54,6 +54,8 @@ const loadAllDateElements = () => {
     let $dateCols = $allHabitSections.children('.date-row');
     let $allDateCols = $dateCols.children('.date-header');
     
+    $allDateCols = $('.date-header')
+
     for(let i = 0; i< $allDateCols.length; i++) {
         let $addDateCol = $allDateCols.eq(i);
         
@@ -65,9 +67,12 @@ const loadAllDateElements = () => {
     let $allHabitCheckFields = $('.habit-check-field');
     console.log($allHabitCheckFields);
 
+    
+
     $.get('/habits/index?dataOnly=true', (habitData, status) => {
         console.log(habitData);
-        for(let i = 0; i < habitData.length; i++) {
+        for(let i = 0; i < habitData.length; i++) {       
+
             let $habitRow = $('#'+habitData[i]._id);
             console.log($habitRow);
             let checkFieldArr = $habitRow.children('.habit-check-field')
@@ -93,12 +98,110 @@ const loadAllDateElements = () => {
                     $eachCheckField.on('click', checkHabitDate)
                 }
 
+
                 console.log(pageDate);
             }
         }
-        
+        generateAllSparkCharts(habitData)
     })
+}
+
+const generateAllSparkCharts = (habitData) => {
+
+    $allSparkCharts = $('.sparkline');
+
+    for(let i = 0; i < $allSparkCharts.length; i++) {
+        generateSingleSparkChart($allSparkCharts.eq(i), habitData);
+    }
+}
+
+const generateSingleSparkChart = ($chartCanvas, habitData) => {
+    let tagName = $chartCanvas.attr('tag-name');
+    let $parentContainer = $chartCanvas.parent().parent()
+    let $dateElements = $parentContainer.find('.habit-check-field');
+    console.log($dateElements);
+
+    let goalScore = [0, 0, 0, 0, 0, 0];
+    let realScore = [0, 0, 0, 0, 0, 0];
+
+    for(let i =0; i < $dateElements.length; i++) {
+        let $ele = $dateElements.eq(i);
+        
+        let dateOffset = parseInt($ele.attr('date-offset'))
+        let habitIndex = habitData.findIndex( (e) => {
+            return e._id === ($ele.attr('habit-id'))
+        });
+        let scoreweight = habitData[habitIndex].weight;
+
+        let checked = $ele.attr('habit-checked')
+
+        if (checked === 'true') {
+            goalScore[dateOffset] += scoreweight;
+            realScore[dateOffset] += scoreweight;
+        }
+        else if(checked === 'false') {
+            goalScore[dateOffset] += scoreweight;
+        }
+
+    }
+    console.log(tagName);
     
+    goalScore.reverse()
+    realScore.reverse()
+    console.log(goalScore);
+    console.log(realScore);
+    let chartDataArr = realScore.map( (e, index) => {
+        return  (parseFloat(e) / parseFloat(goalScore[index])).toFixed(2);
+    });
+    console.log(chartDataArr);
+
+    let ctx = $chartCanvas
+    let chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [-5, -4, -3, -2, -1, 0],
+        datasets: [{
+            // label: 'My First dataset',
+            // backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: chartDataArr,
+            lineTension: 0
+            }]
+        },
+        // Configuration options go here
+        options: {
+            bezierCurve: false,
+            responsive: false,
+            //hide legend
+            legend: {
+                display: false
+            },
+            elements: {
+                line: {
+                    borderColor: '#000000',
+                    borderWidth: 1
+                },
+                point: {
+                  radius: 0
+                }
+            },
+            tooltips: {
+                enabled: false
+            },
+            scales: {
+                yAxes: [
+                    {
+                        display: false
+                    }
+                ],
+                xAxes: [
+                    {
+                        display: false
+                    }
+                ]
+            }
+        }
+    });
 
 }
 
@@ -112,6 +215,7 @@ $( ()=> {
 
     //$(`div[habit-checked='false'`).on('click', checkHabitDate)
     //$(`div[habit-checked='true'`).on('click', uncheckHabitDate)
-    $('.inlinesparkline').sparkline(); 
+
+    
 
 })

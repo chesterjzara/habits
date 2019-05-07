@@ -12,35 +12,44 @@
     <div class='container'>
     <h1>All Habits</h1>
 
-    
+    <div class="row date-row">
+        <div class="col-0"> </div>
+        <!-- Add the dates for each tag -->
+        <% for(let j = 5; j >= 0; j--) { %>
+            <div class="col-2 text-center date-header" date-offset="<%=j%>"> </div>
+        <% } %>
+    </div>
+        
     <% for(let t = 0; t < tags.length; t++) { %>
-        <div class="tag-habit-container border-top border-bottom">
-            <div class="d-flex flex-row align-items-center tag-title ">
-                <h1 class=""><%= tags[t] %> </h1>
-                <a class="btn btn-success mx-4" href="/habits/new?category=<%= tags[t] %>">New Habit</a>
-                <canvas class="sparkline"></canvas>
+        <div class="tag-habit-container  border-top border-bottom" id="<%= tags[t] %>">
+            <div class="d-flex flex-row flex-wrap justify-content-between align-items-center tag-title" tag-name="<%= tags[t] %>">
+                <h2 class=""><%= tags[t] %> </h2>
+                
+                <a class="btn btn-success mx-4" href="/habits/new?category=<%= tags[t] %>">New</a>
+
+                <canvas class="sparkline col-12" id="sparkChart<%=t%>" tag-name="<%= tags[t] %>" width="640px" height="50px"></canvas>
                 
             </div>
                 <div class="habit-data-container">
-                    <div class="row date-row">
-                        <div class="col"> </div>
+                    <!-- <div class="row date-row">
+                        <div class="col-0"> </div> -->
                         <!-- Add the dates for each tag -->
-                        <% for(let j = 5; j >= 0; j--) { %>
-                            <div class="col text-center date-header" date-offset="<%=j%>"> </div>
+                     <!--   <% for(let j = 5; j >= 0; j--) { %>
+                            <div class="col-2 text-center date-header" date-offset="<%=j%>"> </div>
                         <% } %>
-                        <div class="col">  </div>
-                    </div>
+                    </div> -->
                     <% for(let i = 0; i < habits.length; i++) { %>
                         <% if (habits[i].tag === tags[t]) { %>
                             <div class="row habit-data-row" id="<%= habits[i]._id %>">
-                                <div class="col"><a href="/habits/<%= habits[i]._id %>"><%= habits[i].name %></a></div>
+                                <div class="col-12">
+                                    <a href="/habits/<%= habits[i]._id %>"><h3><%= habits[i].name %></a></h3>
+                                </div>
                                 <% for(let j = 5; j >= 0; j--) { %>
-                                    <div date-offset="<%= j %>" class="habit-check-field col text-center"  habit-id="<%= habits[i]._id %>"> 
+                                    <div date-offset="<%= j %>" class="habit-check-field border col-2 text-center"  habit-id="<%= habits[i]._id %>"> 
                                        O
                                     </div>
                                     
                                 <% } %>
-                                <div class="col"> Notes </div>
                             </div>
                         <% } %>
                     <% } %>

@@ -1,7 +1,7 @@
 //Global Month and Year trackers
 var currentMonth;
 var currentYear;
-
+var selectedChartType;
 
 const loadCalendarData = (displayMonth, displayYear) => {
 
@@ -49,7 +49,7 @@ const generateCalendar = (month, year, data) => {
         $calendarContainer.append($newRow);
         //column loop
         for(let j = 0; j < 7; j++) {
-            let $newCol = $('<div>').addClass('calendar-dates col');
+            let $newCol = $('<div>').addClass('calendar-dates col p-0 text-center py-1 border');
             //first row logic
             if(i === 0 && j < firstDayOfMonth) {
                 //Add blank spaces - do nothing for now, maybe blank icon later?
@@ -109,6 +109,9 @@ const calendarClick = (event) => {
     
             //Switch the class
             $date.removeClass('calendar-checked').addClass('calendar-unchecked');
+
+            //Re-load the chart
+            generateChart(selectedChartType);
         });
         
     }
@@ -120,6 +123,8 @@ const calendarClick = (event) => {
             
             //Eventually switch the class
             $date.removeClass('calendar-unchecked').addClass('calendar-checked');
+
+            generateChart(selectedChartType);
         });
     }   
 
@@ -259,6 +264,8 @@ $( ()=> {
     $('.prev-month-btn').on('click', prevMonth)
     $('.next-month-btn').on('click', nextMonth)
 
-    generateChart('6month');
+    selectedChartType = '6month'
+
+    generateChart(selectedChartType);
 
 })
