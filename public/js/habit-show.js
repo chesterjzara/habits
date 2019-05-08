@@ -2,6 +2,7 @@
 var currentMonth;
 var currentYear;
 var selectedChartType;
+var debugMode = false;
 
 const loadCalendarData = (displayMonth, displayYear) => {
 
@@ -12,7 +13,6 @@ const loadCalendarData = (displayMonth, displayYear) => {
     let habitId = $('#habit-title').attr('habit-id');
 
     $.get(`/habits/month/${habitId}?month=${displayMonth}&year=${displayYear}`, (data, status) => {
-        console.log(data);
 
         if(status === 'success'){
             generateCalendar(displayMonth, displayYear, data);
@@ -32,11 +32,6 @@ const generateCalendar = (month, year, data) => {
     let lastDayOfMonth = lastDay.day();
 
     let numDaysInMonth = firstDay.daysInMonth();
-
-    // console.log(firstDay, lastDay);
-    // console.log(firstDayOfMonth);
-    // console.log(lastDayOfMonth);
-    // console.log(numDaysInMonth);
 
     let $calendarContainer = $('.calendar-container');
 
@@ -100,12 +95,11 @@ const calendarClick = (event) => {
         "habitId": habitId
     }
 
-    console.log(rawDate);
     if($date.hasClass('calendar-checked')) {
         //// Do unchecking code here
         $.post(`/habits/uncheck/${habitId}`, sendObj, (data, status) => {
-            console.log('data?',data);
-            console.log(status);
+            //console.log('data?',data);
+            
     
             //Switch the class
             $date.removeClass('calendar-checked').addClass('calendar-unchecked');
@@ -118,8 +112,8 @@ const calendarClick = (event) => {
     else if ($date.hasClass('calendar-unchecked')) {
         //// Do checking code here
         $.post(`/habits/check/${habitId}`, sendObj, (data, status) => {
-            console.log('data?',data);
-            console.log(status);
+            //console.log('data?',data);
+            
             
             //Eventually switch the class
             $date.removeClass('calendar-unchecked').addClass('calendar-checked');
@@ -132,7 +126,6 @@ const calendarClick = (event) => {
 }
 
 const prevMonth = (event) => {
-    console.log('Before: '+ currentMonth + ' ' + currentYear);
     if(currentMonth === 0) {
         currentMonth = 11;
         currentYear = currentYear -1;
@@ -140,12 +133,10 @@ const prevMonth = (event) => {
     else {
         currentMonth = currentMonth - 1
     }
-    console.log(currentMonth, currentYear);
 
     loadCalendarData(currentMonth, currentYear)
 }
 const nextMonth = (event) => {
-    console.log('Before: '+ currentMonth + ' ' + currentYear);
     if(currentMonth === 11) {
         currentMonth = 0;
         currentYear = currentYear + 1;
@@ -153,7 +144,6 @@ const nextMonth = (event) => {
     else {
         currentMonth = currentMonth + 1
     }
-    console.log(currentMonth, currentYear);
 
     loadCalendarData(currentMonth, currentYear)
 }
@@ -164,7 +154,7 @@ const generateChart = (type) => {
 
     $.get(`/habits/${habitId}?dataOnly=true`, (habitData,status) =>{
 
-        console.log(habitData);
+        //console.log(habitData);
         let labelData = getChartLabels(type);
         let chartData = getChartData(type, habitData);
 
@@ -224,7 +214,7 @@ const getChartData = (type, data) => {
     let expectedScoreMonths = [];
     let realScoreMonths = [0 ,0, 0, 0, 0, 0];
 
-    console.log(data);
+    //console.log(data);
 
     if(type === '6month') {
         for(let i =0; i < 6; i++) {
@@ -232,13 +222,10 @@ const getChartData = (type, data) => {
             expectedScoreMonths.unshift( daysThisMonth * (goalFreqPerWeek/7));
         
             for(let j=0; j < data.date_data.length; j++) {
-                console.log('Checking date:',data.date_data[j]);
                 if(moment(data.date_data[j]).isSame(moment().subtract(i, 'month'),'month')){
-                    console.log('Month matched');
                     realScoreMonths[(realScoreMonths.length) - (i + 1)] += 1;
                 }
             }
-            console.log(realScoreMonths);
         }
         
         retArr = realScoreMonths.map( (element, index) => {
@@ -248,8 +235,6 @@ const getChartData = (type, data) => {
                
     }
 
-    console.log(expectedScoreMonths);
-    console.log(retArr);
     return retArr
 }
 

@@ -69,7 +69,6 @@ router.get('/index', (req, res) => {
             
             //Sort the 
             for(let habElement of foundUser.habit_list) {
-                //console.log(habElement);
                 habElement.date_data.sort( (a,b) => {
                     if(moment(a).isBefore(b, 'day')) {return -1}
                     if(moment(a).isAfter(b, 'day')) {return 1}
@@ -195,7 +194,6 @@ router.post('/archive/:id', (req, res) => {
 
     Habit.findById(habitId, (err, foundHabit) => {
         //If currently archived, un-archive
-        console.log('Archived?',foundHabit.archived);
         if(foundHabit.archived) {
             foundHabit.archived = false;
         }
@@ -224,11 +222,10 @@ router.post('/archive/:id', (req, res) => {
     //Based on the id of that button, the browser JS will conditionally hide the archived habits/tags
 router.get('/index/archivetoggle', (req,res) => {
     let userId = req.session.currentUser._id;
-    console.log(req.session.currentUser._id);
 
     User.findById( userId, (err, foundUser) => {
         let archivedStatus = foundUser.archive_show;
-        console.log(foundUser);
+
         if(archivedStatus) {
             foundUser.archive_show = false;
         } else {
@@ -247,24 +244,16 @@ router.get('/index/archivetoggle', (req,res) => {
 ///////////////////////////////////////////////
 
 router.post('/uncheck/:id', (req, res) => {
-    console.log('Raw date:',req.body.date);
+    // console.log('Raw date:',req.body.date);
     
-
-    //Addded start of here
-    //let date = moment(req.body.date, 'MM-DD-YYYY').toDate()//.startOf('day').toDate();
     let date = req.body.date
-
-    console.log(date);
-
     let habitId = req.params.id
-    console.log(date);
-    console.log(habitId);
 
     if(habitId){
         Habit.findById( habitId, (err, foundHabit) => {
             for(let i=0; i < foundHabit.date_data.length; i++) {
-                console.log(foundHabit.date_data[i]);
-                console.log('Test: ',moment(foundHabit.date_data[i]).isSame(date, 'day'));
+                // console.log(foundHabit.date_data[i]);
+                // console.log('Test: ',moment(foundHabit.date_data[i]).isSame(date, 'day'));
                 if(moment(foundHabit.date_data[i]).isSame(date, 'day')){
                     foundHabit.date_data.splice(i,1);
                 }
@@ -304,8 +293,6 @@ router.post('/check/:id', (req, res) => {
     // let userId = req.session.currentUser._id
     let habitId = req.params.id;
 
-    console.log('Hit habits/check/:id');
-
     let debugObj = {};
 
     if(habitId) {
@@ -332,7 +319,7 @@ router.post('/check/:id', (req, res) => {
                             if(moment(a).isAfter(b, 'day')) {return 1}
                             return 0;
                     })
-                    console.log('Inserting at: '+origIndex);
+                    //console.log('Inserting at: '+origIndex);
                     foundUser.habit_list.splice(origIndex,0,updatedHabit);
                     //foundUser.habit_list.push(updatedHabit);
                     
@@ -363,14 +350,13 @@ router.get('/allData', (req,res) => {
 router.get('/month/:id', (req, res) => {
     let habitId = req.params.id;
     let displayMonth = req.query.month;
-    console.log('Display month: '+ displayMonth);
 
     Habit.findById( habitId, (err, foundHabit) => {
         let filteredDates = foundHabit.date_data.filter( (date) => {
             date = date.toISOString();
-            console.log('Date: ',date);
-            console.log('1-',parseInt(moment(date).month()));
-            console.log('2-',parseInt(displayMonth));
+            // console.log('Date: ',date);
+            // console.log('1-',parseInt(moment(date).month()));
+            // console.log('2-',parseInt(displayMonth));
             if ( Math.abs(parseInt(moment(date).month()) - parseInt(displayMonth)) < 2 ) {
                 return true 
             }
@@ -402,7 +388,6 @@ const checkTagsList = (userObj, tagToRemove) => {
     let checkRemoveTag = userObj.habit_list.every( (hab) => {
         return !(hab.tag === (tagToRemove));
     });
-    console.log(userObj);
     //If there are no habits with the tag remaining, remove from the list
     if(checkRemoveTag) {
         let removeIndex = userObj.tag_list.indexOf(tagToRemove);

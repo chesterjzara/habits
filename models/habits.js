@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const User = require('./users.js');
-//const Task = require('./tasks.js')
 
 const habitSchema = new mongoose.Schema({
     userRef: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

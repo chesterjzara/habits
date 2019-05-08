@@ -15,7 +15,7 @@ const uncheckHabitDate = (event) => {
     //Sends the date to remove from the Habit date_data array
         //Then callback code to update the checkbox and chart
     $.post(`/habits/uncheck/${habitId}`, sendObj, (data, status) => {
-        console.log('Data from uncheck GET:',data);
+        //console.log('Data from uncheck GET:',data);
 
         //Change the clicked checkbox element to be "unchecked" - changes icon
         $(event.target).attr('habit-checked','false');
@@ -48,7 +48,7 @@ const checkHabitDate = (event) => {
     //Sends the date to add to the Habit date_data array
         //Then callback code to update the checkbox and chart
     $.post(`/habits/check/${habitId}`, sendObj, (data, status) => {
-        console.log('Data from uncheck GET:',data);
+        //console.log('Data from uncheck GET:',data);
 
         //Change the clicked checkbox element to be "checked" - changes icon
         $(event.target).attr('habit-checked','true');
@@ -82,21 +82,16 @@ const loadAllDateElements = () => {
     }
 
     let $allHabitCheckFields = $('.habit-check-field');
-    console.log($allHabitCheckFields);
-
-    
 
     $.get('/habits/index?dataOnly=true', (habitData, status) => {
-        console.log(habitData);
+        //console.log(habitData);
         for(let i = 0; i < habitData.length; i++) {       
 
             let $habitRow = $('#'+habitData[i]._id);
-            console.log($habitRow);
             let checkFieldArr = $habitRow.children('.habit-check-field')
 
             for(let j=0; j< checkFieldArr.length; j++) {
                 let $eachCheckField = checkFieldArr.eq(j);
-                console.log($eachCheckField);
                 let offset = $eachCheckField.attr('date-offset');
                 let pageDate = moment().startOf('day').subtract(offset, 'days').format();
                 let checked = false;
@@ -117,8 +112,6 @@ const loadAllDateElements = () => {
                     $eachCheckField.on('click', checkHabitDate)
                 }
 
-
-                console.log(pageDate);
             }
         }
         generateAllSparkCharts(habitData)
@@ -138,7 +131,6 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
     let tagName = $chartCanvas.attr('tag-name');
     let $parentContainer = $chartCanvas.parent().parent()
     let $dateElements = $parentContainer.find('.habit-check-field');
-    console.log($dateElements);
 
     let goalScore = [0, 0, 0, 0, 0, 0];
     let realScore = [0, 0, 0, 0, 0, 0];
@@ -164,16 +156,12 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
         }
 
     }
-    console.log(tagName);
     
     goalScore.reverse()
     realScore.reverse()
-    console.log(goalScore);
-    console.log(realScore);
     let chartDataArr = realScore.map( (e, index) => {
         return  (parseFloat(e) / parseFloat(goalScore[index])).toFixed(2);
     });
-    console.log(chartDataArr);
 
     let ctx = $chartCanvas
     let chart = new Chart(ctx, {
@@ -241,7 +229,6 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
 const hideTagsWithNoHabits = () => {
     
     let $allTagElements = $('.tag-habit-container');
-    console.log($allTagElements);
 
     for(let i = 0; i < $allTagElements.length; i++) {
         let numHabitChildren = $allTagElements.eq(i).find('.habit-data-row').length;
@@ -263,20 +250,10 @@ $( ()=> {
         hideTagsWithNoHabits();
     }
 
-    // $toggleArchiveButton.on('click', ()=>{
-    //     if($toggleArchiveButton.attr('id') === 'archiveHide') {
-    //         $toggleArchiveButton.attr('id','archiveShow');
-    //     } else {
-    //         $toggleArchiveButton.attr('id','archiveHide');
-        // }
-        
-    // })
-    
 
     loadAllDateElements();
 
-    //$(`div[habit-checked='false'`).on('click', checkHabitDate)
-    //$(`div[habit-checked='true'`).on('click', uncheckHabitDate)
+
 
     
 

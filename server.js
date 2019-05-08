@@ -23,9 +23,6 @@ const db = mongoose.connection;
 //Models
 const User = require('./models/users.js');
 const Habit = require('./models/habits.js');
-const Task = require('./models/tasks.js');
-
-
 
 // Connect to Mongo
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true}, () => {
