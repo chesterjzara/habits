@@ -30,14 +30,20 @@
         </div>
         
 
-    <div class="row date-row">
-        <div class="col-0"> </div>
-        <!-- Add the dates for each tag -->
-        <% for(let j = 5; j >= 0; j--) { %>
-            <div class="col-2 text-center date-header" date-offset="<%=j%>"> </div>
-        <% } %>
-    </div>
+        <div class="row date-row">
+            <div class="col-0"> </div>
+            <!-- Add the dates for each tag -->
+            <% for(let j = 5; j >= 0; j--) { %>
+                <div class="col-2 text-center date-header" date-offset="<%=j%>"> </div>
+            <% } %>
+        </div>
         
+        <% if (habits.length === 0) { %>
+            <div class="my-5 row justify-content-center align-items-center">
+                No habits entered yet... <a class="text-center btn btn-success mx-4" href="/habits/new">New</a>
+            </div>
+        <% } %>
+
     <% for(let t = 0; t < tags.length; t++) { %>
         <div class="tag-habit-container  border-top border-bottom" id="<%= tags[t] %>">
             <div class="d-flex flex-row flex-wrap justify-content-between align-items-center tag-title" tag-name="<%= tags[t] %>">

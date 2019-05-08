@@ -151,11 +151,12 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
             return e._id === ($ele.attr('habit-id'))
         });
         let scoreweight = habitData[habitIndex].weight;
+        //let expectedFreq = habitData[habitIndex].weekly_goal/7;
 
         let checked = $ele.attr('habit-checked')
 
         if (checked === 'true') {
-            goalScore[dateOffset] += scoreweight;
+            goalScore[dateOffset] += scoreweight; //expectedFreq*scoreweight;
             realScore[dateOffset] += scoreweight;
         }
         else if(checked === 'false') {

@@ -11,33 +11,40 @@
     <% include ./partials/nav.ejs %>
 
     <div class="container">
+        <div class="homepage-image row align-items-center">
+            <% if(currentUser) { %>
+                <h1 class="welcome-text col text-center text-white display-4">Welcome <%= currentUser.display_name %>!</h1>
+            <% } else { %>
+                <h1 class="welcome-text col text-center text-white display-4 p-3">Welcome! <br> Log In or Register below.</h1>
+            <% } %>
+        </div>
 
-    
-    
-
-    <!-- Show only to logged in user -->
-    <% if(currentUser) { %>
-        <h1 class="display-4">Welcome <%= currentUser.display_name %></h1>
-        <!-- New Habit -->
-        <!-- Dashboard -->
-        <!-- Logout -->
-        <form action="/sessions?_method=DELETE" method="POST">
-            <input type="submit" value="Logout" />
-        </form>
-            
-
-    <!-- If not logged in -->
-    <% } else { %>
-     
-        <a href="/sessions/new">Log In</a>
-      
-      
-        <a href="/users/new">Register</a>
         
-    <% } %>
+        
+        <div class="row">
+            <!-- Show only to logged in user -->
+            <% if(currentUser) { %>
+            <!-- New Habit -->
+            <a class="col border border-primary btn m-3" href="/habits/new">New Habit</a>
+            <!-- Dashboard -->
+            <a class="col border border-primary btn m-3" href="/habits/index">Dashboard</a>
+            <!-- Logout -->
+            <form action="/sessions?_method=DELETE" method="POST" class="col border border-primary btn m-3">
+                <input type="submit" class="logout-btn" value="Logout" />
+            </form>
 
-    <!-- Show always -->
-    
+
+            <!-- If not logged in -->
+            <% } else { %>
+
+            <a class="col border border-primary btn m-3" href="/sessions/new">Log In</a>
+            <a class="col border border-primary btn m-3" href="/users/new">Register</a>
+
+            <% } %>
+        </div>
+
+        <!-- Show always -->
+
         <div class="jumbotron">
             <blockquote class="blockquote">
                 <p class="quote-text mb-1 "> </p>
