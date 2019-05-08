@@ -16,7 +16,7 @@ div[habit-checked="false"]::before {
 }
 
 .calendar-checked {
-    background-color: aqua;
+    background-color: #759eb8;
 }
 
 .sparkline {
@@ -49,6 +49,16 @@ div[habit-checked="false"]::before {
 }
 .index-back {
     font-family: Icons;
+}
+
+/* Index styling */
+.habit-title {
+    color: navy;
+    text-decoration: none;
+}
+.habit-title:hover {
+    color: #759eb8;
+    text-decoration: none;
 }
 
 

@@ -13,8 +13,8 @@
         <% include ../partials/nav.ejs %>
 
         <div class='container'>
-            <div class="row align-items-center">
-                <h1 class="text-center mr-auto">All Habits</h1>
+            <div class="row align-items-center border-bottom">
+                <h1 class="text-center mr-auto">My Habits</h1>
                 <a href="/habits/index/archivetoggle">
                     <div <% if(user.archive_show) { %> id="archiveHide" <% } else { %> id="archiveShow" <% } %>
                         class="toggle-archive btn btn-warning">
@@ -32,7 +32,7 @@
                 <div class="col-0"> </div>
                 <!-- Add the dates for each tag -->
                 <% for(let j = 5; j >= 0; j--) { %>
-                <div class="col-2 text-center date-header" date-offset="<%=j%>"> </div>
+                <!-- <div class="col-2 text-center date-header" date-offset="<%=j%>"> </div> -->
                 <% } %>
             </div>
 
@@ -43,7 +43,7 @@
             <% } %>
 
             <% for(let t = 0; t < tags.length; t++) { %>
-            <div class="tag-habit-container  border-top border-bottom" id="<%= tags[t] %>">
+            <div class="tag-habit-container border-bottom mb-4" id="<%= tags[t] %>">
                 <div class="d-flex flex-row flex-wrap justify-content-between align-items-center tag-title"
                     tag-name="<%= tags[t] %>">
                     <h2 class=""><%= tags[t] %> </h2>
@@ -55,13 +55,13 @@
 
                 </div>
                 <div class="habit-data-container">
-                    <!-- <div class="row date-row">
-                        <div class="col-0"> </div> -->
-                    <!-- Add the dates for each tag -->
-                    <!--   <% for(let j = 5; j >= 0; j--) { %>
+                    <div class="row date-row">
+                        <div class="col-0"> </div>
+                     <!-- Add the dates for each tag -->
+                      <% for(let j = 5; j >= 0; j--) { %>
                             <div class="col-2 text-center date-header" date-offset="<%=j%>"> </div>
                         <% } %>
-                    </div> -->
+                    </div> 
                     <% for(let i = 0; i < habits.length; i++) { %>
                     <% let showHabit = true;
                         if(user.archive_show) {
@@ -78,9 +78,9 @@
                     <% if (habits[i].tag === tags[t] && showHabit) { %>
                     <div class="row habit-data-row" id="<%= habits[i]._id %>">
                         <div class="col-12">
-                            <a href="/habits/<%= habits[i]._id %>">
-                                <h3><%= habits[i].name %>
-                            </a></h3>
+                            <a class="habit-title" href="/habits/<%= habits[i]._id %>">
+                                <h4 class=""><%= habits[i].name %>
+                            </a></h4>
                         </div>
                         <% for(let j = 5; j >= 0; j--) { %>
                         <div date-offset="<%= j %>" class="habit-check-field border col-2 text-center"
