@@ -12,8 +12,12 @@ const userSchema = new mongoose.Schema({
     archive_show: {
         type: Boolean,
         default: false
+    },
+    tempUser: {
+        type: Boolean,
+        default: false
     }
-});
+}, {timestamps: true} );
 
 const User = mongoose.model('User', userSchema);
 

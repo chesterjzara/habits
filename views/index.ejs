@@ -39,9 +39,23 @@
 
             <a class="col border border-primary btn m-3" href="/sessions/new">Log In</a>
             <a class="col border border-primary btn m-3" href="/users/new">Register</a>
+            <form action="/users/tempuser" method="POST" class="col border border-primary btn m-3">
+                <input type="submit" class="logout-btn" value="Guest User">
+            </form>
 
             <% } %>
         </div>
+
+        <% if(currentUser) { %> 
+            <% if(currentUser.tempUser) { %> 
+                <div class="row">
+                    <div class="col">
+                        You are logged in as a guest, to permanently save you data please create an account.
+                    </div>    
+                    <a href="/users/tempuser/save" class="col border border-primary btn m-3" >Create Account <br>and Save Data</a>
+                </div>
+            <% } %>
+        <% } %>
 
         <!-- Show always -->
 

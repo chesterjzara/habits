@@ -73,8 +73,10 @@ app.use(flash());
 //      Routes
 ///////////////////////
 
-//Test
+//Homepage Index
 app.get('/' , (req, res) => {
+    // if(req.session.currentUser)
+        
     res.render('index.ejs', {
         currentUser: req.session.currentUser
     });
@@ -162,29 +164,25 @@ app.get('/currentUser', (req,res)=> {
     res.send(req.session);
 })
 
-//Testing DB Setup:
+/////////////////////////////
+//        Cron Tasks
+////////////////////////////
+let cron = require('node-cron');
 
-// User.create({
-//     username: "CJZ",
-//     password: "test",
-//     displayName: "CJ"
-// }, (err,createdUser) => {
-//     console.log(createdUser);
-//     Habit.create({
-//         userRef: createdUser.id,
-//         habitName: "Brushing Teeth",
-//         notes: "Do 3 times daily!",
-//     }, (err,newHabit) => {
-//         if(err) {console.log(err);}
-//         createdUser.habitList.push(newHabit)
-//         createdUser.save((err,newSavedUser)=>{
-//             console.log('After Habit add attempt');
-//             console.log(newHabit);
-//             console.log('Orig User');
-//             console.log(createdUser);
-//             console.log('Updated user');
-//             console.log(newSavedUser);
-//         })
-        
-//     });
-// });
+const purgeTempUsers = () => {
+    console.log('Add code to purge temp users here');
+}
+
+//Run once on server start, wait ~10 seconds so DB is connected first
+setTimeout(purgeTempUsers, 10000);
+
+//Schedule to run hourly when server is running
+cron.schedule('0 * * * *', () => {
+    console.log('Running a task each hour');
+    purgeTempUsers();
+});
+
+
+
+
+
