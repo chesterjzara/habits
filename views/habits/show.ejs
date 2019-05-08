@@ -8,82 +8,86 @@
 </head>
 
 <body>
-    <% include ../partials/nav.ejs %>
-    <a href="/habits/index">
-        <div class="container-fluid bg-info"> 
-            <div class="container">
-                <h2 class='text-white'> 
-                    <span class="index-back">&#xE800</span> Back to Dashboard
-                </h2> 
+    <div class="content">
+        <% include ../partials/nav.ejs %>
+        <a href="/habits/index">
+            <div class="container-fluid bg-info">
+                <div class="container">
+                    <h2 class='text-white'>
+                        <span class="index-back">&#xE800</span> &nbsp;Back to Dashboard
+                    </h2>
+                </div>
             </div>
-        </div>
-    </a>
+        </a>
 
-    <div class="container my-3">
-        <div class="row">
-            <!-- Header - NOTE this is passing id to browser JS, DO NOT REMOVE-->
-            <div class="leftPane col">
-                <h1 habit-id="<%= habit._id %>" id="habit-title"><%= habit.name %></h1>
-                <h3>Category: <%= habit.tag %></h2>
-                <div>
-                    <h3>Description:</h3>
-                    <p><%= habit.description %></p>
-                </div>
-                <div>
-                    <h3>Goal:</h3>
-                    <% if( habit.weekly_goal === 1) { %>
-                        <p><%= habit.weekly_goal %> time per week.</p>
-                    <% } else { %>
-                        <p><%= habit.weekly_goal %> times per week.</p>
-                    <% } %>
-                </div>
-                <h3>Weight: <%= habit.weight %> </h3>
-            </div>
-            <div class="rightPane col">
-                <canvas id="showChart"></canvas>
-                <br>
-                <div>
-                    <div class="d-flex justify-content-center flex-row">
-                        <div class="m-2">
-                            <a class="btn btn-primary" href="/habits/<%= habit._id %>/edit">Edit</a>
+        <div class="container my-3">
+            <div class="row">
+                <!-- Header - NOTE this is passing id to browser JS, DO NOT REMOVE-->
+                <div class="leftPane col">
+                    <h1 habit-id="<%= habit._id %>" id="habit-title"><%= habit.name %></h1>
+                    <h3>Category: <%= habit.tag %></h2>
+                        <div>
+                            <h3>Description:</h3>
+                            <p><%= habit.description %></p>
                         </div>
-                        <form class="m-2" action="/habits/<%= habit._id %>?_method=DELETE" method="POST">
-                            <input class="btn btn-danger" type="submit" value="DELETE">
-                        </form>
-                        <form class="m-2" action="/habits/archive/<%= habit._id %>" method="POST">
-                            <input class="btn btn-secondary" type="submit" value="<% if(habit.archived) { %> Un-Archive <% } else { %> Archive <% } %>">
-                        </form>
+                        <div>
+                            <h3>Goal:</h3>
+                            <% if( habit.weekly_goal === 1) { %>
+                            <p><%= habit.weekly_goal %> time per week.</p>
+                            <% } else { %>
+                            <p><%= habit.weekly_goal %> times per week.</p>
+                            <% } %>
+                        </div>
+                        <h3>Weight: <%= habit.weight %> </h3>
+                </div>
+                <div class="rightPane col">
+                    <canvas id="showChart"></canvas>
+                    <br>
+                    <div>
+                        <div class="d-flex justify-content-center flex-row">
+                            <div class="m-2">
+                                <a class="btn btn-primary" href="/habits/<%= habit._id %>/edit">Edit</a>
+                            </div>
+                            <form class="m-2" action="/habits/<%= habit._id %>?_method=DELETE" method="POST">
+                                <input class="btn btn-danger" type="submit" value="DELETE">
+                            </form>
+                            <form class="m-2" action="/habits/archive/<%= habit._id %>" method="POST">
+                                <input class="btn btn-secondary" type="submit"
+                                    value="<% if(habit.archived) { %> Un-Archive <% } else { %> Archive <% } %>">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container border-top border-bottom px-0">
+            <div class="container d-flex text-center flex-row justify-content-between px-0">
+                <div class=" btn btn-info prev-month-btn">
+                    Prev
+                </div>
+                <h2> <span class=" calendar-month">Month</span> <span class="calendar-year">Year</span></h2>
+                <div class=" btn btn-info next-month-btn">
+                    Next
+                </div>
+            </div>
+            <div class="container d-flex flex-row px-0">
+                <div class="container calendar-container text-align">
+                    <div class="row calendar-days">
+                        <div class="col px-0 py-1 border text-center">Sun</div>
+                        <div class="col px-0 py-1 border text-center">Mon</div>
+                        <div class="col px-0 py-1 border text-center">Tue</div>
+                        <div class="col px-0 py-1 border text-center">Wed</div>
+                        <div class="col px-0 py-1 border text-center">Thur</div>
+                        <div class="col px-0 py-1 border text-center">Fri</div>
+                        <div class="col px-0 py-1 border text-center">Sat</div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
-<div class="container border-top border-bottom px-0">
-    <div class="container d-flex text-center flex-row justify-content-between px-0">
-        <div class=" btn btn-info prev-month-btn">
-            Prev
-        </div>
-        <h2> <span class=" calendar-month">Month</span> <span class="calendar-year">Year</span></h2>
-        <div class=" btn btn-info next-month-btn">
-            Next
-        </div>
-    </div>
-    <div class="container d-flex flex-row px-0">
-        <div class="container calendar-container text-align">
-            <div class="row calendar-days">
-                <div class="col px-0 py-1 border text-center">Sun</div>
-                <div class="col px-0 py-1 border text-center">Mon</div>
-                <div class="col px-0 py-1 border text-center">Tue</div>
-                <div class="col px-0 py-1 border text-center">Wed</div>
-                <div class="col px-0 py-1 border text-center">Thur</div>
-                <div class="col px-0 py-1 border text-center">Fri</div>
-                <div class="col px-0 py-1 border text-center">Sat</div>
-            </div>
-        </div>
-    </div>
-</div>
+    <% include ../partials/footer.ejs %>
 </body>
 
 </html>

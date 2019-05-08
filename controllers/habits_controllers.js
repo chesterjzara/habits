@@ -14,35 +14,47 @@ module.exports = router;
 // New habit page
 router.get('/new', (req,res)=> {
     
-    console.log(req.query);
+    if(req.session.currentUser) {
+        res.render('habits/new.ejs', {
+            currentUser: req.session.currentUser,
+            category: req.query.category
+        });
+    } else {
+        res.redirect('/');
+    }
 
-    res.render('habits/new.ejs', {
-        currentUser: req.session.currentUser,
-        category: req.query.category
-    });
+    
 });
 //Create new Habit
 router.post('/', (req,res) => {
-    let currentUser = req.session.currentUser;
-    let newHabit = req.body;
-    
-    User.findById(currentUser._id, (err,foundUser) => {
-        newHabit.userRef = foundUser._id;
-        Habit.create(
-            newHabit,
-            (err, createdHabit) => {
-                foundUser.habit_list.push(createdHabit);
-                
-                if(foundUser.tag_list.indexOf(createdHabit.tag) === -1){
-                    foundUser.tag_list.push(createdHabit.tag)
+    //Test if we are logged in - will error out if not
+    if(req.session.currentUser) {
+        let currentUser = req.session.currentUser;
+        let newHabit = req.body;
+        //If no Habit Name is entered use "Untitled"
+        if(req.body.name === '') {
+            req.body.name = "Untitled"
+        }
+        //Find the current user in the DB - assign ID to habit and add to habits and user collections
+        User.findById(currentUser._id, (err,foundUser) => {
+            newHabit.userRef = foundUser._id;
+            Habit.create(
+                newHabit,
+                (err, createdHabit) => {
+                    //Add habit to the user's habit_list
+                    foundUser.habit_list.push(createdHabit);
+                    //Add new Habit tag to user tag list if it is not already
+                    if(foundUser.tag_list.indexOf(createdHabit.tag) === -1){
+                        foundUser.tag_list.push(createdHabit.tag)
+                    }
+                    //Save the updated User back to the DB
+                    foundUser.save((err, data)=>{
+                        res.redirect(`/habits/index`);
+                    });
                 }
-
-                foundUser.save((err, data)=>{
-                    res.redirect(`/habits/index`);
-                });
-            }
-        );
-    });
+            );
+        });
+    }
 });
 
 //Habit Index Page - show all habits for current user
@@ -113,10 +125,9 @@ router.delete('/:id', (req, res) => {
         User.findOne({'habit_list._id' : habitId }, (err, foundUser)=> {
             foundUser.habit_list.id(habitId).remove();
             
-
+            //Checks all remaining Habits to see if the tag needs to be removed (and removes)
             checkTagsList(foundUser, tagToRemove);
             
-
             foundUser.save( (err, data) => {
                 res.redirect('/habits/index');
             });
@@ -126,8 +137,8 @@ router.delete('/:id', (req, res) => {
 
 //Edit 
 router.get('/:id/edit', (req, res) => {
+    
     let habitId = req.params.id;
-
     Habit.findById( habitId, (err, foundHabit) => {
          User.findOne( {'_id': foundHabit.userRef}, (err, foundUser) => {
             res.render('habits/edit.ejs', {

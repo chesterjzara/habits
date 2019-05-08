@@ -3,69 +3,71 @@
 
 <head>
     <% include ../partials/head.ejs %>
-    <title>Document</title>
+    <title>Habit Tracking | Create Account</title>
 </head>
 
 <body>
-    <% include ../partials/nav.ejs %>
-    <a href="/">
-        <div class="container-fluid bg-info">
-            <div class="container">
-                <h2 class='text-white'>
-                    <span class="index-back">&#xE800</span> Back to Home
-                </h2>
-            </div>
-        </div>
-    </a>
-
-    <div class="container">
-            <!-- Unable to create user -->
-            <% if(messages) { %>
-                <h1> <%= messages %></h1>
-            <% } %>
-    </div>
-
-    <div class="container">
-        <div class="row no-gutters"> 
-            <div class="col">
-                <div class="signin-img-frame"> <img class="img-fluid" src="/img/lifting.jpg" alt="Exercising"></div>
-                <div class="signin-img-frame"> <img class="img-fluid" src="/img/studying.jpg" alt="Studying"></div>
-                <div class="signin-img-frame"> <img class="img-fluid" src="/img/laundry.jpg" alt="Laundry"></div>
-                <div class="signin-img-frame"> <img class="img-fluid" src="/img/healthyfoods.jpg" alt="Healthy Food">
+    <div class="content">
+        <% include ../partials/nav.ejs %>
+        <a href="/">
+            <div class="container-fluid bg-info">
+                <div class="container">
+                    <h2 class='text-white'>
+                        <span class="index-back">&#xE800</span> &nbsp;Back to Home
+                    </h2>
                 </div>
             </div>
-        
+        </a>
 
-            <div class="container sign-in-up col pl-3">
-                <h1 class="display-4">Create User Profile</h1>
-                <form action="/users/savetemp/<%= user._id %>?_method=PUT" method="POST">
-                    <fieldset class="border sign-in-up-fields">
-                        <legend>Account Info</legend>
-                        
-                        <label for="username"> Username </label>
-                        <input type="text" id="username" name="username" placeholder="Username" />
-                        <br>
-                        <label for="password"> Password </label>
-                        <input type="password" name="password" />
-                    </fieldset>
-                    
-                    <fieldset class="border sign-in-up-fields">
-                        <legend> User Info</legend>
-                        
-                        <label for="nickname"> Display Name (optional) </label>
-                        <input type="text" id="nickname" name="display_name" placeholder="Your Name" />
-                        <br>
-                        <label for="email"> E-mail (optional) </label>
-                        <input type="email" id="email" name="email" placeholder="Ex: test@gmail.com" />
-                    </fieldset>
-                    
-                    <div class="row signin-submit-container">
-                            <a class="col btn btn-outline-secondary" href="/">Cancel</a>
-                            <input class="new-user-session-submit btn btn-outline-primary col" type="submit" value="Create User" />
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col pt-4">
+                    <div class="signin-img-frame"> <img class="img-fluid" src="/img/lifting.jpg" alt="Exercising"></div>
+                    <div class="signin-img-frame"> <img class="img-fluid" src="/img/studying.jpg" alt="Studying"></div>
+                    <div class="signin-img-frame"> <img class="img-fluid" src="/img/laundry.jpg" alt="Laundry"></div>
+                    <div class="signin-img-frame"> <img class="img-fluid" src="/img/healthyfoods.jpg"
+                            alt="Healthy Food">
                     </div>
+                </div>
 
-                </form>
+
+                <div class="container sign-in-up col pl-3">
+                    <% if(messages) { %>
+                        <h1 class="text-danger text-center"> <%= messages %></h1>
+                    <% } %>
+                    <h2>Create User Profile</h2>
+                    <form action="/users/savetemp/<%= user._id %>?_method=PUT" method="POST">
+                        <fieldset class="border sign-in-up-fields">
+                            <legend>Account Info</legend>
+
+                            <label for="username"> Username </label>
+                            <input type="text" id="username" name="username" placeholder="Username" autofocus required/>
+                            <br>
+                            <label for="password"> Password </label>
+                            <input type="password" name="password" />
+                        </fieldset>
+
+                        <fieldset class="border sign-in-up-fields">
+                            <legend> User Info</legend>
+
+                            <label for="nickname"> Display Name (optional) </label>
+                            <input type="text" id="nickname" name="display_name" placeholder="Your Name" />
+                            <br>
+                            <label for="email"> E-mail (optional) </label>
+                            <input type="email" id="email" name="email" placeholder="Ex: test@gmail.com" />
+                        </fieldset>
+
+                        <div class="row signin-submit-container">
+                            <a class="col btn btn-outline-secondary" href="/">Cancel</a>
+                            <input class="new-user-session-submit btn btn-outline-primary col" type="submit"
+                                value="Create User" />
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+    <% include ../partials/footer.ejs %>
+
 </body>

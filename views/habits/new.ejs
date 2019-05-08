@@ -7,70 +7,73 @@
 </head>
 
 <body>
-    <% include ../partials/nav.ejs %>
-    <a href="/habits/index">
-        <div class="container-fluid bg-info">
-            <div class="container"> 
-                <h2 class='text-white'> <span class="index-back">&#xE800</span> Back to Dashboard</h2> 
+    <div class="content">
+        <% include ../partials/nav.ejs %>
+        <a href="/habits/index">
+            <div class="container-fluid bg-info">
+                <div class="container">
+                    <h2 class='text-white'> <span class="index-back">&#xE800</span> &nbsp;Back to Dashboard</h2>
+                </div>
             </div>
-        </div>
-    </a>
+        </a>
 
-    <form action="/habits" method="POST" class="d-flex flex-row flex-wrap justify-content-center">
-        <div class="container">
-            <div class='col-md'>
-                <fieldset class="border px-4 pb-3 d-flex flex-column">
-                    <legend>New Habit/Task</legend>
-                    <label>
-                        Name
-                        <input type="text" name="name" placeholder="Habit/Task Name" class="w-100">
-                    </label>
-                    <label>
-                        Description <br>
-                        <textarea name="description" placeholder="Enter a short description of the task"
-                            class="w-100"></textarea>
-                    </label>
-                    <label>
-                        Category/Tag
-                        <input type="text" name="tag" placeholder="Eg: Health, Fitness, Learning, Social, etc"
-                            value="<%= category %>" class="w-100">
-                    </label>
-                </fieldset>
+        <form action="/habits" method="POST" class="d-flex flex-row flex-wrap justify-content-center">
+            <div class="container">
+                <div class='col-md'>
+                    <fieldset class="border px-4 pb-3 d-flex flex-column">
+                        <legend>New Habit/Task</legend>
+                        <label>
+                            Name
+                            <input type="text" name="name" placeholder="Habit/Task Name" class="w-100">
+                        </label>
+                        <label>
+                            Description <br>
+                            <textarea name="description" placeholder="Enter a short description of the task"
+                                class="w-100"></textarea>
+                        </label>
+                        <label>
+                            Category/Tag
+                            <input type="text" name="tag" placeholder="Eg: Health, Fitness, Learning, Social, etc"
+                                value="<%= category %>" class="w-100">
+                        </label>
+                    </fieldset>
+                </div>
+                <div class="col-md">
+                    <fieldset class="border px-4 pb-3 d-flex flex-column">
+                        <legend>Habit Values</legend>
+                        <label>
+                            Weekly Goal
+                            <select class="w-100" name="weekly_goal">
+                                <option value="1">1 time per week</option>
+                                <option value="2">2 times per week</option>
+                                <option value="3">3 times per week</option>
+                                <option value="4">4 times per week</option>
+                                <option value="5">5 times per week</option>
+                                <option value="6">6 times per week</option>
+                                <option value="7">7 times per week</option>
+                            </select>
+                        </label>
+                        <label>
+                            Weight
+                            <input class="w-100" type="number" name="weight" value="1">
+                            <P>Use weighting to indicate certain habits are more important. This will contribute to your
+                                habit adherence scoring. Leave this at 1 if you aren't sure.</P>
+                        </label>
+                    </fieldset>
+                </div>
             </div>
-            <div class="col-md">
-                <fieldset class="border px-4 pb-3 d-flex flex-column">
-                    <legend>Habit Values</legend>
-                    <label>
-                        Weekly Goal
-                        <select class="w-100" name="weekly_goal">
-                            <option value="1">1 time per week</option>
-                            <option value="2">2 times per week</option>
-                            <option value="3">3 times per week</option>
-                            <option value="4">4 times per week</option>
-                            <option value="5">5 times per week</option>
-                            <option value="6">6 times per week</option>
-                            <option value="7">7 times per week</option>
-                        </select>
-                    </label>
-                    <label>
-                        Weight
-                        <input class="w-100" type="number" name="weight" value="1">
-                        <P>Use weighting to indicate certain habits are more important. This will contribute to your
-                            habit adherence scoring. Leave this at 1 if you aren't sure.</P>
-                    </label>
-                </fieldset>
+            <br>
+            <div class="container text-center">
+                <a href="/habits/index">
+                    <div class="btn btn-secondary p-3 m-3">Cancel</div>
+                </a>
+                <input type="submit" value="Create Habit" class="btn btn-primary text-center p-3 m-3">
             </div>
-        </div>
-        <br>
-        <div class="container text-center">
-            <a href="/habits/index">
-                <div class="btn btn-secondary p-3 m-3">Cancel</div>
-            </a>
-            <input type="submit" value="Create Habit" class="btn btn-primary text-center p-3 m-3">
-        </div>
-        
-    </form>
 
+        </form>
+    </div>
+
+    <% include ../partials/footer.ejs %>
 </body>
 
 </html>

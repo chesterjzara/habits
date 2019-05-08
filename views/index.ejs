@@ -8,66 +8,70 @@
 </head>
 
 <body>
-    <% include ./partials/nav.ejs %>
+    <div class="content">
+        <% include ./partials/nav.ejs %>
 
-    <div class="container">
-        <div class="homepage-image row align-items-center">
+        <div class="container">
+            <div class="homepage-image row align-items-center">
+                <% if(currentUser) { %>
+                <h1 class="welcome-text col text-center text-white display-4">Welcome <%= currentUser.display_name %>!
+                </h1>
+                <% } else { %>
+                <h1 class="welcome-text col text-center text-white display-4 p-3">Welcome! <br> Log In or Register
+                    below.</h1>
+                <% } %>
+            </div>
+
+            <div class="row">
+                <!-- Show only to logged in user -->
+                <% if(currentUser) { %>
+                <!-- New Habit -->
+                <a class="col btn btn-outline-primary m-3" href="/habits/new">New Habit</a>
+                <!-- Dashboard -->
+                <a class="col btn btn-outline-primary m-3" href="/habits/index">Dashboard</a>
+                <!-- Logout -->
+                <form action="/sessions?_method=DELETE" method="POST" class="col m-3 p-0">
+                    <input type="submit" class="col btn-outline-primary btn" value="Logout" />
+                </form>
+
+
+                <!-- If not logged in -->
+                <% } else { %>
+
+                <a class="col btn btn-outline-primary m-3" href="/sessions/new">Log In</a>
+                <a class="col btn-outline-primary btn m-3" href="/users/new">Register</a>
+                <form action="/users/tempuser" method="POST" class="col m-3 p-0">
+                    <input type="submit" class="col btn-outline-primary btn" value="Guest User">
+                </form>
+
+                <% } %>
+            </div>
+
             <% if(currentUser) { %>
-                <h1 class="welcome-text col text-center text-white display-4">Welcome <%= currentUser.display_name %>!</h1>
-            <% } else { %>
-                <h1 class="welcome-text col text-center text-white display-4 p-3">Welcome! <br> Log In or Register below.</h1>
-            <% } %>
-        </div>
-
-        
-        
-        <div class="row">
-            <!-- Show only to logged in user -->
-            <% if(currentUser) { %>
-            <!-- New Habit -->
-            <a class="col border border-primary btn m-3" href="/habits/new">New Habit</a>
-            <!-- Dashboard -->
-            <a class="col border border-primary btn m-3" href="/habits/index">Dashboard</a>
-            <!-- Logout -->
-            <form action="/sessions?_method=DELETE" method="POST" class="col border border-primary btn m-3">
-                <input type="submit" class="logout-btn" value="Logout" />
-            </form>
-
-
-            <!-- If not logged in -->
-            <% } else { %>
-
-            <a class="col border border-primary btn m-3" href="/sessions/new">Log In</a>
-            <a class="col border border-primary btn m-3" href="/users/new">Register</a>
-            <form action="/users/tempuser" method="POST" class="col border border-primary btn m-3">
-                <input type="submit" class="logout-btn" value="Guest User">
-            </form>
-
-            <% } %>
-        </div>
-
-        <% if(currentUser) { %> 
-            <% if(currentUser.tempUser) { %> 
-                <div class="row">
-                    <div class="col">
-                        You are logged in as a guest, to permanently save you data please create an account.
-                    </div>    
-                    <a href="/users/tempuser/save" class="col border border-primary btn m-3" >Create Account <br>and Save Data</a>
+            <% if(currentUser.tempUser) { %>
+            <div class="row align-items-center">
+                <div class="col text-center">
+                    You are logged in as a guest, to permanently save you data please create an account.
                 </div>
+                <a href="/users/tempuser/save" class="col btn btn-outline-success m-3">Create Account <br>and Save
+                    Data</a>
+            </div>
             <% } %>
-        <% } %>
+            <% } %>
 
-        <!-- Show always -->
+            <!-- Show always -->
 
-        <div class="jumbotron">
-            <blockquote class="blockquote">
-                <p class="quote-text mb-1 "> </p>
-                <footer class="quote-author blockquote-footer"></footer>
-            </blockquote>
+            <div class="jumbotron">
+                <blockquote class="blockquote">
+                    <p class="quote-text mb-1 "> </p>
+                    <div class="quote-author blockquote-footer"></div>
+                </blockquote>
+            </div>
+
+
         </div>
     </div>
-
-
+    <% include ./partials/footer.ejs %>
 
 </body>
 

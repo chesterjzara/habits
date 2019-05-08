@@ -79,7 +79,7 @@ div[habit-checked="false"]::before {
 
 } */
 .signin-img-frame > img {
-    height: 20vh;
+    height: 18vh;
     width: 100%;
     object-fit: cover;
 }
@@ -100,4 +100,22 @@ div[habit-checked="false"]::before {
 }
 .welcome-text {
     background: rgba(0, 0, 0, 0.4);
+}
+
+
+/* Footer */
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+.content {
+    /* min-height: calc(100vh - 88px) */
+    flex: 1 0 auto;
+}
+footer {
+    flex-shrink: 0;
+    margin-top: 20px;
 }

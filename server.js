@@ -193,6 +193,3 @@ cron.schedule('0 * * * *', () => {
     console.log('Running a task each hour');
     purgeTempUsers();
 });
-
-
-

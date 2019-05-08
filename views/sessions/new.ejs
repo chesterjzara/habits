@@ -1,60 +1,65 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <% include ../partials/head.ejs %>
     <title>Habit Tracking | Sign In</title>
 </head>
 
 <body>
-    <% include ../partials/nav.ejs %>
-    <a href="/">
-        <div class="container-fluid bg-info">
-            <div class="container">
-                <h2 class='text-white'> <span class="index-back">&#xE800</span> Back to Home</h2>
-            </div>
-        </div>
-    </a>
-
-    <div class="container">
-        <div class="row no-gutters">
-            
-            <div class="container sign-in-up col pr-3">
-                <h2>Sign In</h2>
-                <form action="/sessions" method="POST">
-                    <fieldset class="border sign-in-up-fields">
-                        <legend>Login Info</legend>
-
-                        <label for="username"> Username </label>
-                        <input type="text" id="username" name="username" placeholder="Username" />
-                        <br>
-                        <label for="password"> Password </label>
-                        <input type="password" name="password" />
-                    </fieldset>
-
-                    <div class="row signin-submit-container">
-                        <a class="col btn btn-outline-secondary" href="/">Cancel</a>
-                        <input class="new-user-session-submit btn btn-outline-primary col" type="submit"
-                            value="Sign In" />
-                    </div>
-                    <!-- Wrong User/Password Warning -->
-                    <% if(messages) { %>
-                        <h1> <%= messages %></h1>
-                        <% } %>
-
-                </form>
-            </div>
-
-            <div class="col">
-                <div class="signin-img-frame"> <img class="img-fluid" src="/img/dishes.jpg" alt="Exercising"></div>
-                <div class="signin-img-frame"> <img class="img-fluid" src="/img/working.jpg" alt="Studying"></div>
-                <div class="signin-img-frame"> <img class="img-fluid" src="/img/jogging.jpg" alt="Laundry"></div>
-                <div class="signin-img-frame"> <img class="img-fluid" src="/img/music-practice.jpg" alt="Healthy Food">
+    <div class="content">
+        <% include ../partials/nav.ejs %>
+        <a href="/">
+            <div class="container-fluid bg-info">
+                <div class="container">
+                    <h2 class='text-white'> <span class="index-back">&#xE800</span> &nbsp;Back to Home</h2>
                 </div>
             </div>
+        </a>
 
+        <div class="container">
+            <div class="row no-gutters">
+
+                <div class="container sign-in-up col pr-3">
+                    <!-- Wrong User/Password Warning -->
+                    <% if(messages) { %>
+                        <h1 class="text-danger text-center"> <%= messages %></h1>
+                    <% } %>
+                    <h2>Sign In</h2>
+                    <form action="/sessions" method="POST">
+                        <fieldset class="border sign-in-up-fields">
+                            <legend>Login Info</legend>
+
+                            <label for="username"> Username </label>
+                            <input type="text" id="username" name="username" placeholder="Username" autofocus required/>
+                            <br>
+                            <label for="password"> Password </label>
+                            <input type="password" name="password" />
+                        </fieldset>
+
+                        <div class="row signin-submit-container">
+                            <a class="col btn btn-outline-secondary" href="/">Cancel</a>
+                            <input class="new-user-session-submit btn btn-outline-primary col" type="submit"
+                                value="Sign In" />
+                        </div>
+                        
+
+                    </form>
+                </div>
+
+                <div class="col">
+                    <div class="signin-img-frame"> <img class="img-fluid" src="/img/dishes.jpg" alt="Exercising"></div>
+                    <div class="signin-img-frame"> <img class="img-fluid" src="/img/working.jpg" alt="Studying"></div>
+                    <div class="signin-img-frame"> <img class="img-fluid" src="/img/jogging.jpg" alt="Laundry"></div>
+                    <div class="signin-img-frame"> <img class="img-fluid" src="/img/music-practice.jpg"
+                            alt="Healthy Food">
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
-
+    <% include ../partials/footer.ejs %>
 </body>
 
 </html>

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Habit = require('./habits.js');
 
 const userSchema = new mongoose.Schema({
-    username: { type: String, unique: true},
+    username: { type: String, unique: true, required: true},
     password: String,
     display_name: String,
     email: String,

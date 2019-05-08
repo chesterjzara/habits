@@ -31,16 +31,23 @@ router.get('/:id/edit', (req, res) => {
 
     User.findById( userId, (err, foundUser) => {
         // res.send(foundUser)
-        res.render('users/edit.ejs', {
-            user: foundUser,
-            currentUser: req.session.currentUser
-        });
+
+        if(foundUser.tempUser) {
+            res.redirect('/users/tempuser/save')
+        }
+        else {
+            res.render('users/edit.ejs', {
+                user: foundUser,
+                currentUser: req.session.currentUser
+            });
+        }
     });
 });
 
 //Update User Route = PUT
 router.put('/:id', (req,res) =>{
     let userId = req.params.id;
+    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
 
     User.findByIdAndUpdate( userId, req.body, {new:true}, (err, updatedUser) => {
         res.redirect(`/users/${userId}`);
@@ -64,6 +71,7 @@ router.post('/', (req,res) => {
             }
         } else {
             //console.log(createdUser);
+            req.session.currentUser = createdUser;
             res.redirect('/');
         }
     });
@@ -97,16 +105,26 @@ router.post('/tempuser', (req,res) => {
 
 //Save Temp User - Edit Page - GET
 router.get('/tempuser/save', (req, res) => {
-    let userId = req.session.currentUser._id
-
-    User.findById( userId, (err, foundUser) => {
-        //res.send(foundUser)
-        res.render('users/save-temp.ejs', {
-            messages: req.flash('info'),
-            user: foundUser,
-            currentUser: req.session.currentUser
-        });
-    });
+    
+    if(req.session.currentUser) {
+        if(req.session.currentUser.tempUser) {
+            let userId = req.session.currentUser._id
+            User.findById( userId, (err, foundUser) => {
+            //res.send(foundUser)
+                res.render('users/save-temp.ejs', {
+                    messages: req.flash('info'),
+                    user: foundUser,
+                    currentUser: req.session.currentUser
+                });
+            });
+        } else {
+            res.redirect('/') 
+        }
+    } else {
+        res.redirect('/');
+    }
+    
+    
 });
 
 router.put('/savetemp/:id', (req,res) => {
