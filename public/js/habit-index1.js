@@ -181,7 +181,7 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
             labels: [-5, -4, -3, -2, -1, 0],
         datasets: [{
             // label: 'My First dataset',
-            backgroundColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(0, 0, 128, 0.4)',
             borderColor: 'rgb(0, 0, 128)',
             // fill: false,
             data: chartDataArr,
