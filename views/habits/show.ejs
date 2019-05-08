@@ -51,7 +51,7 @@
                             <input class="btn btn-danger" type="submit" value="DELETE">
                         </form>
                         <form class="m-2" action="/habits/archive/<%= habit._id %>" method="POST">
-                            <input class="btn btn-secondary" type="submit" value="Archive">
+                            <input class="btn btn-secondary" type="submit" value="<% if(habit.archived) { %> Un-Archive <% } else { %> Archive <% } %>">
                         </form>
                     </div>
                 </div>

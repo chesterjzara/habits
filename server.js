@@ -165,12 +165,24 @@ app.get('/currentUser', (req,res)=> {
 })
 
 /////////////////////////////
-//        Cron Tasks
+//      Cron Temp User Purge
 ////////////////////////////
 let cron = require('node-cron');
 
+//Delete any users with the tempUser flag AND were created > 24 hours ago
 const purgeTempUsers = () => {
-    console.log('Add code to purge temp users here');
+    console.log('Purging temp Users older than 24 hours...');
+    let now = moment();
+
+    User.deleteMany({
+        tempUser : true,
+        createdAt : {
+            $lte: moment(now).subtract(24, 'hours').toDate()
+        }
+    }, (err, deletionReport) => {
+        if(err) {console.log(err);}
+        console.log(deletionReport);
+    });
 }
 
 //Run once on server start, wait ~10 seconds so DB is connected first
@@ -181,8 +193,6 @@ cron.schedule('0 * * * *', () => {
     console.log('Running a task each hour');
     purgeTempUsers();
 });
-
-
 
 
 
