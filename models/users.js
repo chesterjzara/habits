@@ -8,7 +8,11 @@ const userSchema = new mongoose.Schema({
     display_name: String,
     email: String,
     habit_list: [Habit.schema],
-    tag_list: [String]
+    tag_list: [String],
+    archive_show: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const User = mongoose.model('User', userSchema);

@@ -14,8 +14,35 @@ router.get('/new', (req,res) => {
 
 //Show User
 router.get('/:id', (req,res) => {
-    res.render('users/show.ejs', {
-        currentUser: req.session.currentUser
+    let userId = req.session.currentUser._id
+
+    User.findById( userId, (err, foundUser) => {
+        // res.send(foundUser)
+        res.render('users/show.ejs', {
+            user: foundUser,
+            currentUser: req.session.currentUser
+        });
+    });
+});
+
+//Edit User Route
+router.get('/:id/edit', (req, res) => {
+    let userId = req.params.id
+
+    User.findById( userId, (err, foundUser) => {
+        // res.send(foundUser)
+        res.render('users/edit.ejs', {
+            user: foundUser,
+            currentUser: req.session.currentUser
+        });
+    });
+});
+
+router.put('/:id', (req,res) =>{
+    let userId = req.params.id;
+
+    User.findByIdAndUpdate( userId, req.body, {new:true}, (err, updatedUser) => {
+        res.redirect(`/users/${userId}`);
     })
 })
 
@@ -38,7 +65,7 @@ router.post('/', (req,res) => {
             //console.log(createdUser);
             res.redirect('/');
         }
-    })
-})
+    });
+});
 
 module.exports = router;

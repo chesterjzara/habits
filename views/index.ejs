@@ -1,61 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <% include ./partials/head.ejs %>
+    <script src="/js/homepage.js" charset="utf-8"></script>
     <title>Habit Tracking | Home</title>
 </head>
+
 <body>
-    
     <% include ./partials/nav.ejs %>
+
+    <div class="container">
+
+    
     
 
-    <nav>
-        <a href="/">
-            <h1>Chop Wood, Carry Water</h1>
-        </a>
-        <ul>
-        <% if(currentUser) { %>
-            <li>
-                <a href="#">Dashboard</a>
-            </li>
-            <li>
-                <a href="#">Habit Tracking</a>
-            </li>
-            <li>
-                <form action="/sessions?_method=DELETE" method="POST">
-                    <input type="submit" value="Logout"/>
-                </form>
-            </li>
-    
-        <% } else { %>
-            <li>
-                <a href="/sessions/new">Log In</a>
-            </li>
-            <li>
-                <a href="/users/new">Register</a>
-            </li>
-            
-    
-        <% } %> 
-        </ul>
-    </nav>
-
-    <button class="test-button">Testing</button>
-
-
+    <!-- Show only to logged in user -->
     <% if(currentUser) { %>
-        <h2>Login checked!</h2>
+        <h1 class="display-4">Welcome <%= currentUser.display_name %></h1>
+        <!-- New Habit -->
+        <!-- Dashboard -->
+        <!-- Logout -->
+        <form action="/sessions?_method=DELETE" method="POST">
+            <input type="submit" value="Logout" />
+        </form>
+            
 
+    <!-- If not logged in -->
     <% } else { %>
+     
         <a href="/sessions/new">Log In</a>
+      
+      
         <a href="/users/new">Register</a>
+        
+    <% } %>
 
-    <% } %> 
-
-    <!-- <a href="/auth/login">Login Screen</a> -->
-
+    <!-- Show always -->
     
+        <div class="jumbotron">
+            <blockquote class="blockquote">
+                <p class="quote-text mb-1 "> </p>
+                <footer class="quote-author blockquote-footer"></footer>
+            </blockquote>
+        </div>
+    </div>
+
 
 
 </body>
+
 </html>

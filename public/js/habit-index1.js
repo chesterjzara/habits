@@ -1,10 +1,10 @@
 
 const uncheckHabitDate = (event) => {
-    console.log('Add code to uncheck habit date...');
-
+    //Toggles the event listener - will Check box next click
     $(event.target).off('click', uncheckHabitDate)
     $(event.target).on('click', checkHabitDate)
 
+    //Get the Date and Habit to send in POST query 
     let rawDate = $(event.target).attr('habit-date');
     let habitId = $(event.target).attr('habit-id');
     let sendObj = {
@@ -12,38 +12,55 @@ const uncheckHabitDate = (event) => {
         "habitId": habitId
     }
 
-    console.log(rawDate);
+    //Sends the date to remove from the Habit date_data array
+        //Then callback code to update the checkbox and chart
     $.post(`/habits/uncheck/${habitId}`, sendObj, (data, status) => {
-        console.log('data?',data);
-        console.log(status);
+        console.log('Data from uncheck GET:',data);
 
+        //Change the clicked checkbox element to be "unchecked" - changes icon
         $(event.target).attr('habit-checked','false');
+
+        //Update the chart on clicking check/uncheck
+        let $greatGrandParent = $(event.target).parent().parent().parent();
+        let $sparklineChart = $greatGrandParent.find('.sparkline')
+        //Get the original chart.js object
+        let existingChart = $sparklineChart.data('chart');
+        existingChart.destroy();
+        //Re-call the chart gen function to redraw new line
+        generateSingleSparkChart($sparklineChart, data.habit_list)
     });
 
 }
 
 const checkHabitDate = (event) => {
-    console.log(event.currentTarget);
-    console.log(event.target);
-
+    //Toggles the event listener - will Check box next click
     $(event.target).off('click', checkHabitDate)
     $(event.target).on('click', uncheckHabitDate)
 
+    //Get the Date and Habit to send in POST query 
     let rawDate = $(event.target).attr('habit-date');
     let habitId = $(event.target).attr('habit-id');
-    
     let sendObj = {
         "date": rawDate,
         "habitId": habitId
     }
 
-    console.log('Right before post');
-    console.log(sendObj);
+    //Sends the date to add to the Habit date_data array
+        //Then callback code to update the checkbox and chart
     $.post(`/habits/check/${habitId}`, sendObj, (data, status) => {
-        console.log('data?',data);
-        console.log(status);
+        console.log('Data from uncheck GET:',data);
 
+        //Change the clicked checkbox element to be "checked" - changes icon
         $(event.target).attr('habit-checked','true');
+        
+        //Update the chart on clicking check/uncheck
+        let $greatGrandParent = $(event.target).parent().parent().parent();
+        let $sparklineChart = $greatGrandParent.find('.sparkline')
+        //Get the original chart.js object
+        let existingChart = $sparklineChart.data('chart');
+        existingChart.destroy();
+        
+        generateSingleSparkChart($sparklineChart, data.habit_list)
     })
 }
 
@@ -164,7 +181,7 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
             labels: [-5, -4, -3, -2, -1, 0],
         datasets: [{
             // label: 'My First dataset',
-            // backgroundColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(0, 0, 128)',
             // fill: false,
             data: chartDataArr,
@@ -201,7 +218,7 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
                     {
                         display: false,
                         ticks: {
-                            padding: 30,
+                            // padding: 30,
                             min: -0.05,
                             max: 1.05
                         }
@@ -216,6 +233,21 @@ const generateSingleSparkChart = ($chartCanvas, habitData) => {
         }
     });
 
+    //Store the Chart.js object in the canvas DOM element for altering later
+    ctx.data('chart', chart);
+}
+
+const hideTagsWithNoHabits = () => {
+    
+    let $allTagElements = $('.tag-habit-container');
+    console.log($allTagElements);
+
+    for(let i = 0; i < $allTagElements.length; i++) {
+        let numHabitChildren = $allTagElements.eq(i).find('.habit-data-row').length;
+        if(numHabitChildren < 1){
+            $allTagElements.eq(i).remove();
+        }
+    }
 }
 
 $( ()=> {
@@ -223,6 +255,22 @@ $( ()=> {
     $(window).on('popstate', function() {
         location.reload(true);
     }); //via - https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
+
+     //Support for our Archive functionality
+    let $toggleArchiveButton = $('.toggle-archive');
+    if($toggleArchiveButton.attr('id') === 'archiveShow') {
+        hideTagsWithNoHabits();
+    }
+
+    // $toggleArchiveButton.on('click', ()=>{
+    //     if($toggleArchiveButton.attr('id') === 'archiveHide') {
+    //         $toggleArchiveButton.attr('id','archiveShow');
+    //     } else {
+    //         $toggleArchiveButton.attr('id','archiveHide');
+        // }
+        
+    // })
+    
 
     loadAllDateElements();
 

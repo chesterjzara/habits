@@ -10,7 +10,13 @@
 <body>
     <% include ../partials/nav.ejs %>
     <a href="/habits/index">
-        <div class="container-fluid bg-info"> <h2 class='text-white'> <span class="index-back">&#xE800</span> Back to Dashboard</h2> </h2></div>
+        <div class="container-fluid bg-info"> 
+            <div class="container">
+                <h2 class='text-white'> 
+                    <span class="index-back">&#xE800</span> Back to Dashboard
+                </h2> 
+            </div>
+        </div>
     </a>
 
     <div class="container my-3">
@@ -43,6 +49,9 @@
                         </div>
                         <form class="m-2" action="/habits/<%= habit._id %>?_method=DELETE" method="POST">
                             <input class="btn btn-danger" type="submit" value="DELETE">
+                        </form>
+                        <form class="m-2" action="/habits/archive/<%= habit._id %>" method="POST">
+                            <input class="btn btn-secondary" type="submit" value="Archive">
                         </form>
                     </div>
                 </div>

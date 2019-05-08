@@ -71,6 +71,7 @@ router.get('/index', (req, res) => {
             else {
                 //Send the current user 
                 res.render('habits/index1.ejs', {
+                    user: foundUser,
                     currentUser : currentUser,
                     habits: foundUser.habit_list,
                     tags: foundUser.tag_list
@@ -114,16 +115,7 @@ router.delete('/:id', (req, res) => {
             
 
             checkTagsList(foundUser, tagToRemove);
-            // let checkRemoveTag = foundUser.habit_list.every( (hab) => {
-            //     console.log(hab);
-            //     return !(hab.tag === (tagToRemove))
-            // });
-            // console.log(tagToRemove);
-            // console.log('Should remove tag: '+checkRemoveTag);
-            // if(checkRemoveTag) {
-            //     let removeIndex = foundUser.tag_list.indexOf(tagToRemove);
-            //     foundUser.tag_list.splice(removeIndex, 1)
-            // }
+            
 
             foundUser.save( (err, data) => {
                 res.redirect('/habits/index');
@@ -155,10 +147,15 @@ router.put('/:id', (req,res) => {
         
         Habit.findByIdAndUpdate( habitId, req.body, {new: true}, (err, updatedHabit) => {
             User.findOne( {'_id': updatedHabit.userRef}, (err, foundUser) => {
-                            
-                //Remove old habit and re-add new habit
+                
+                //Get original Index of habit to replace
+                let origIndex = foundUser.habit_list.findIndex( (e)=> {
+                    return e._id.equals(updatedHabit._id);
+                })
+                //Remove old, outdated version of the habit 
                 foundUser.habit_list.id(habitId).remove();
-                foundUser.habit_list.push(updatedHabit);
+                //Add the new version of the habit at the original index
+                foundUser.habit_list.splice(origIndex,0,updatedHabit);
 
                 //Check if tag changed - update User.tag_list for removal of old/addition of new
                 if(oldTag !== updatedHabit.tag) {
@@ -177,6 +174,62 @@ router.put('/:id', (req,res) => {
     });
 }),
 
+//////////////////////////////////////////////
+//          Archive / Un-Archive Routes
+/////////////////////////////////////////////
+router.post('/archive/:id', (req, res) => {
+    let habitId = req.params.id;
+    let originPage = req.header('Referer') || '/';
+    //via https://stackoverflow.com/questions/12442716/res-redirectback-with-parameters
+
+    Habit.findById(habitId, (err, foundHabit) => {
+        //If currently archived, un-archive
+        console.log('Archived?',foundHabit.archived);
+        if(foundHabit.archived) {
+            foundHabit.archived = false;
+        }
+        //Else currently un-archived, archive
+        else {
+            foundHabit.archived = true;
+        }
+        foundHabit.save((err, savedHabit) => {
+            User.findOne( {'_id': savedHabit.userRef} , (err, foundUser) => {
+                if(err) {console.log(err);}
+                
+                foundUser.habit_list.id(habitId).remove();
+                foundUser.habit_list.push(savedHabit);
+
+                foundUser.save((err, savedUser) => {
+                    res.redirect(originPage);
+                });
+            });
+        });
+    });
+});
+
+//Toggle Show/Hide Archive - Triggered by button on Index
+    //Stores toggle setting in DB for user
+    //index.ejs changes the button display based on this User.archive_show value
+    //Based on the id of that button, the browser JS will conditionally hide the archived habits/tags
+router.get('/index/archivetoggle', (req,res) => {
+    let userId = req.session.currentUser._id;
+    console.log(req.session.currentUser._id);
+
+    User.findById( userId, (err, foundUser) => {
+        let archivedStatus = foundUser.archive_show;
+        console.log(foundUser);
+        if(archivedStatus) {
+            foundUser.archive_show = false;
+        } else {
+            foundUser.archive_show = true;
+        }
+
+        foundUser.save((err,savedUser) => {
+            res.redirect('/habits/index')
+        })
+        
+    })
+})
 
 ///////////////////////////////////////////////
 //      Updating Date Array (check/uncheck)
@@ -274,7 +327,7 @@ router.post('/check/:id', (req, res) => {
                     
                     foundUser.save((err,data)=>{
                         if(err) {res.send(err)}
-                        else { res.send(debugObj)}
+                        else { res.send(data)}
                     })
                 })
             }  

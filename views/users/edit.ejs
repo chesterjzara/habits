@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head.ejs %>
+    <title>Document</title>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    <a href="/users/<%= user._id %>">
+        <div class="container-fluid bg-info">
+            <div class="container">
+                <h2 class='text-white'>
+                    <span class="index-back">&#xE800</span> Back to Profile
+                </h2>
+            </div>
+        </div>
+    </a>
+
+    <div class="container">
+        <h1 class="display-4">Edit User Profile</h1>
+
+        <form action="/users/<%= user._id %>?_method=PUT" method="POST">
+            <fieldset class="row">
+                <label class="col-12">
+                    Display Name:
+                    <input type="text" name="display_name" value="<%= user.display_name %>">
+                </label>
+                <label class="col-12">
+                    E-mail Address:
+                    <input type="email" name="email" value="<%= user.email %>">
+                </label>
+
+            </fieldset>
+            <div class="container text-center">
+                <a href="/users/<%= user._id %>">
+                    <div class="btn btn-secondary p-3 m-3">Cancel</div>
+                </a>
+                <input type="submit" value="Update Habit" class="btn btn-primary text-center p-3 m-3">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -17,6 +17,14 @@ const habitSchema = new mongoose.Schema({
     weight: {
         type: Number,
         default: 1
+    },
+    archived: {
+        type: Boolean,
+        default: false
+    },
+    public: {
+        type: Boolean,
+        default: false
     }
 });
 

@@ -6,5 +6,24 @@
 </head>
 <body>
     <% include ../partials/nav.ejs %>
+    <a href="/">
+        <div class="container-fluid bg-info"> 
+            <div class="container">
+                <h2 class='text-white'> 
+                    <span class="index-back">&#xE800</span> Back to Home
+                </h2> 
+            </div>
+        </div>
+    </a>
+
+    <div class="container">
+        <h1 class="display-4">User Profile</h1>
+        <h3>Display Name: <%= user.display_name %></h3>
+        <h3>E-mail: <%= user.email %></h3>
+
+        <h3><a href="/users/<%= user._id %>/edit">Edit User Info</a></h3>
+        
+
+    </div>
 </body>
 </html>

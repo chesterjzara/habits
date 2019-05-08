@@ -1,6 +1,7 @@
 
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
     <a class="navbar-brand" href="/">
         <h1>Habit Tracker</h1>
     </a>
@@ -19,10 +20,14 @@
                 <a href="/habits/index" class="nav-link">Habit Dashboard</a>
             </li>
             <li class="nav-item">
+                    <a href="/users/<%= currentUser._id %>" class="nav-link">Profile</a>
+                </li>
+            <li class="nav-item">
                 <form action="/sessions?_method=DELETE" method="POST">
                     <input type="submit" value="Logout" class="nav-link logout-btn"/>
                 </form>   
             </li>
+            
             <% } %>
             <% if(!currentUser) { %>
             <li class="nav-item">
@@ -34,4 +39,5 @@
             <% } %>
         </ul>
     </div>
+</div>
 </nav>
