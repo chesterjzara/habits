@@ -33,20 +33,20 @@ The dates are generated on the client side based on user input and stored in the
 The graphs are generated with Chart.js on the client-side. Additionally, the scoring behind the grpahs is done on the client-side as well to minimize calls to the server. 
 
 ## Unsolved Problems / Additional Features
-  1. Styling - better clor scheme and animations on page elements
-  2. Improve weighting and frequency system to give more intelligent information on habit learning and adherence
-  3. Add support for OpenAuth with google
-  4. Public habit component
-    * Opt-in for habits/categories to be shared
-    * Suggest common Categories or Habits to users
-    * Anonymous or named feedback and sharing mechanisms 
-  5. Adding modals for improved usability
-    * Login modal
-    * Confirmation on delete option
-  6. Add mass delete or archive functionality to USer Profile page
-  7. Ability to organize order of Categories or Habits
-  8. Ability to set color scheme for either habits or tags/categories
-  9. More frequency options - more fluid
-    * Don't look strictly at a week or at a month but a more flexible algorithm
-  10. Monthly chart - make it account for your % of the month so far, not the total month
+1. Styling - better clor scheme and animations on page elements
+2. Improve weighting and frequency system to give more intelligent information on habit learning and adherence
+3. Add support for OpenAuth with google
+4. Public habit component
+  * Opt-in for habits/categories to be shared
+  * Suggest common Categories or Habits to users
+  * Anonymous or named feedback and sharing mechanisms 
+5. Adding modals for improved usability
+  * Login modal
+  * Confirmation on delete option
+6. Add mass delete or archive functionality to USer Profile page
+7. Ability to organize order of Categories or Habits
+8. Ability to set color scheme for either habits or tags/categories
+9. More frequency options - more fluid
+  * Don't look strictly at a week or at a month but a more flexible algorithm
+10. Monthly chart - make it account for your % of the month so far, not the total month
   
