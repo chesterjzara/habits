@@ -37,8 +37,8 @@ The graphs are generated with Chart.js on the client-side. Additionally, the sco
 2. Improve weighting and frequency system to give more intelligent information on habit learning and adherence
 3. Add support for OpenAuth with google
 4. Public habit component
-  * Opt-in for habits/categories to be shared
-  * Suggest common Categories or Habits to users
+   * Opt-in for habits/categories to be shared
+   * Suggest common Categories or Habits to users
   * Anonymous or named feedback and sharing mechanisms 
 5. Adding modals for improved usability
   * Login modal
