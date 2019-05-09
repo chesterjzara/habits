@@ -39,14 +39,14 @@ The graphs are generated with Chart.js on the client-side. Additionally, the sco
 4. Public habit component
    * Opt-in for habits/categories to be shared
    * Suggest common Categories or Habits to users
-  * Anonymous or named feedback and sharing mechanisms 
+   * Anonymous or named feedback and sharing mechanisms 
 5. Adding modals for improved usability
-  * Login modal
-  * Confirmation on delete option
+   * Login modal
+   * Confirmation on delete option
 6. Add mass delete or archive functionality to USer Profile page
 7. Ability to organize order of Categories or Habits
 8. Ability to set color scheme for either habits or tags/categories
 9. More frequency options - more fluid
-  * Don't look strictly at a week or at a month but a more flexible algorithm
+   * Don't look strictly at a week or at a month but a more flexible algorithm
 10. Monthly chart - make it account for your % of the month so far, not the total month
   
