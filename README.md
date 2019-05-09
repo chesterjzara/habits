@@ -48,4 +48,5 @@ The graphs are generated with Chart.js on the client-side. Additionally, the sco
   8. Ability to set color scheme for either habits or tags/categories
   9. More frequency options - more fluid
     * Don't look strictly at a week or at a month but a more flexible algorithm
+  10. Monthly chart - make it account for your % of the month so far, not the total month
   
