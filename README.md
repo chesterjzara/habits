@@ -46,4 +46,6 @@ The graphs are generated with Chart.js on the client-side. Additionally, the sco
   6. Add mass delete or archive functionality to USer Profile page
   7. Ability to organize order of Categories or Habits
   8. Ability to set color scheme for either habits or tags/categories
+  9. More frequency options - more fluid
+    * Don't look strictly at a week or at a month but a more flexible algorithm
   
